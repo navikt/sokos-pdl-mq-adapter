@@ -1,5 +1,6 @@
 plugins {
     id 'application'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'org.jetbrains.kotlin.jvm' version '1.6.10'
 }
 
@@ -19,4 +20,11 @@ dependencies {
     implementation "ch.qos.logback:logback-classic:$logback_version"
     testImplementation "io.ktor:ktor-server-tests:$ktor_version"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+}
+
+shadowJar {
+    archiveBaseName.set("app")
+    manifest {
+        attributes "Main-Class": "no.nav.kontoregister.person.mqadapter.BootstrapKt"
+    }
 }
