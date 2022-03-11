@@ -1,0 +1,21 @@
+name: Deploy alerts
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/alerts.yaml'
+      - '.nais/alerterator.yaml'
+jobs:
+  apply-alerts:
+    name: Apply alerts to cluster
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: deploy to prod
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: prod-gcp
+          RESOURCE: .nais/alerterator.yaml
