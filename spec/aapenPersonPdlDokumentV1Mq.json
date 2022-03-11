@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nav.no/pdl/person/mq/aapenPersonPdlDokumentV1Mq.schema.json",
+  "title": "Sync melding fra kafka for person på id og navn",
+  "description": "Sync melding fra kafka for person på id og navn",
+  "type": "object",
+  "properties": {
+    "ident": {
+      "description": "Unik id for en person",
+      "type": "string"
+    },
+    "personInfo": {
+      "$ref": "#/$defs/personInfo"
+    },
+    "identer": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Ident"
+      },
+      "description": "List av Identer til person."
+    }
+  },
+  "required": [
+    "ident",
+    "personInfo"
+  ],
+  "$defs": {
+    "personInfo": {
+      "type": "object",
+      "properties": {
+        "fornavn": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "mellomnavn": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "etternavn": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "forkortetNavn": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+     }
+   },
+  "Ident": {
+    "type": "object",
+    "properties": {
+      "ident": {
+        "type": "string",
+        "example": "24117920441",
+        "description": "Ident til person."
+      },
+      "aktiv": {
+        "type": "boolean",
+        "example": true,
+        "description": "Hvis er aktiv ident."
+      },
+      "identifikatorType": {
+        "type": "string",
+        "example": "FOLKEREGISTERIDENTIFIKATOR",
+        "description": "Hva slags identifikator FOLKEREGISTERIDENTIFIKATOR eller N_PID eller AKTOR_ID"
+      }
+    }
+  }
+ }
+}
