@@ -1,0 +1,62 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: sokos-pdl-person-mq-adapter
+  namespace: okonomi
+  labels:
+    team: okonomi
+spec:
+  image: {{image}}
+  port: 8080
+  replicas:
+    min: 1
+    max: 1
+    cpuThresholdPercentage: 90
+  secureLogs:
+    enabled: true
+  kafka:
+    pool: nav-dev
+  gcp:
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 4Gi
+    requests:
+      cpu: 500m
+      memory: 512Mi
+  liveness:
+    path: /internal/is_alive
+    initialDelay: 30
+    timeout: 5
+    periodSeconds: 5
+    failureThreshold: 30
+  readiness:
+    path: /internal/is_ready
+    initialDelay: 60
+    periodSeconds: 5
+    timeout: 5
+  prometheus:
+    enabled: true
+    path: /metrics
+  ingresses:
+    - https://sokos-pdl-person-mq-adapter.dev.intern.nav.no
+  env:
+    - name: KAFKA_SCHEMA_REGISTRY
+      value: https://nav-dev-kafka-nav-dev.aivencloud.com:26487
+    - name: KAFKA_CONSUMER_TOPIC
+      value: okonomi.aapen-person-pdl-dokument-v1
+    - name: KAFKA_CONSUMER_GROUP_ID
+      value: pdl-person-mq-adapter-group-id
+#      variabler for mq
+    - name: MQ_PRODUCER_QUEUE
+      value: QA.Q1_230.OB01_PDLDATA
+    - name: MQ_HOST
+      value: b27apvl219.preprod.local
+    - name: MQ_PORT
+      value: "1413"
+    - name: MQ_QUEUE_MANAGER_NAME
+      value: MQLS01
+    - name: MQ_CHANNEL
+      value: Q1_SOKOS_PDL_PERSON
+  envFrom:
+    - secret: sokos-pdl-person-mq-adapter-secrets
