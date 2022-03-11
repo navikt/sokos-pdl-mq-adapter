@@ -12,18 +12,19 @@ object AapenPersonPdlDokumentV1Mapper {
         aapenPersonPdlDokumentV1Mq.ident = aapenPersonPdlDokumentV1FraKafka._id
         aapenPersonPdlDokumentV1FraKafka.value.let {
             val personInfo = PersonInfo()
-            personInfo.fornavn = aapenPersonPdlDokumentV1FraKafka.value.hentPerson.navn.fornavn
-            personInfo.mellomnavn = aapenPersonPdlDokumentV1FraKafka.value.hentPerson.navn.mellomnavn
-            personInfo.etternavn = aapenPersonPdlDokumentV1FraKafka.value.hentPerson.navn.etternavn
-            personInfo.forkortetNavn = aapenPersonPdlDokumentV1FraKafka.value.hentPerson.navn.forkortetNavn
+            personInfo.fornavn = aapenPersonPdlDokumentV1FraKafka.value.hentPerson.navn.get(0).fornavn
+            personInfo.mellomnavn = aapenPersonPdlDokumentV1FraKafka.value.hentPerson.navn.get(0).mellomnavn
+            personInfo.etternavn = aapenPersonPdlDokumentV1FraKafka.value.hentPerson.navn.get(0).etternavn
+            personInfo.forkortetNavn = aapenPersonPdlDokumentV1FraKafka.value.hentPerson.navn.get(0).forkortetNavn
 
             aapenPersonPdlDokumentV1Mq.personInfo = personInfo
             aapenPersonPdlDokumentV1Mq.identer = aapenPersonPdlDokumentV1FraKafka.value.hentIdenter
                 .identer.map {
-                    Ident()
+                    var withIdentifikatorType: Ident = Ident()
                         .withIdent(it.ident)
                         .withAktiv(it.aktiv)
-                        .withIdentifikatorType(it.identifikatorType.name)
+                        .withIdentifikatorType(it.identifikatorType?.name)
+                    withIdentifikatorType
                 }
             return aapenPersonPdlDokumentV1Mq
         }
