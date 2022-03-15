@@ -45,4 +45,3 @@ jobs:
           CLUSTER: dev-gcp
           RESOURCE: .nais/naiserator-preprod.yaml
 
-

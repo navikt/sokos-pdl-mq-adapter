@@ -1,0 +1,401 @@
+{
+  "hentPerson": {
+    "adressebeskyttelse": [],
+    "bostedsadresse": [],
+    "deltBosted": [],
+    "doedsfall": [],
+    "falskIdentitet": null,
+    "familierelasjoner": [],
+    "foedsel": [
+      {
+        "foedselsaar": 1908,
+        "foedselsdato": "1908-07-09",
+        "foedeland": "MAR",
+        "foedested": null,
+        "foedekommune": null,
+        "metadata": {
+          "opplysningsId": "4eb0daad-1329-43d6-b373-0b5d71814c62",
+          "master": "Freg",
+          "endringer": [
+            {
+              "type": "OPPRETT",
+              "registrert": "2019-11-29T09:09:56.697",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "kilde": "skatteetaten"
+            }
+          ]
+        }
+      },
+      {
+        "foedselsaar": 1908,
+        "foedselsdato": "1908-07-09",
+        "foedeland": "MAR",
+        "foedested": null,
+        "foedekommune": null,
+        "metadata": {
+          "opplysningsId": "6ea7babf-6312-4b32-973e-9f90e0b1e2ad",
+          "master": "Freg",
+          "endringer": [
+            {
+              "type": "OPPRETT",
+              "registrert": "2019-11-23T08:42:51.774",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "kilde": "skatteetaten"
+            },
+            {
+              "type": "KORRIGER",
+              "registrert": "2019-12-15T15:16:06.394",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "kilde": "skatteetaten"
+            }
+          ]
+        }
+      }
+    ],
+    "folkeregisteridentifikator": [
+      {
+        "identifikasjonsnummer": "49070849800",
+        "type": "DNR",
+        "status": "I_BRUK",
+        "folkeregistermetadata": {
+          "ajourholdstidspunkt": "2019-11-29T09:09:46.265",
+          "gyldighetstidspunkt": "2019-11-29T09:09:46.265",
+          "opphoerstidspunkt": null,
+          "kilde": "SKATTEETATEN",
+          "aarsak": null,
+          "sekvens": null
+        },
+        "metadata": {
+          "opplysningsId": "45dbab94-1b26-4477-8df2-cf69fb1147cd",
+          "master": "Freg",
+          "endringer": [
+            {
+              "type": "OPPRETT",
+              "registrert": "2019-11-29T09:09:56.697",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "kilde": "SKATTEETATEN"
+            }
+          ]
+        }
+      },
+      {
+        "identifikasjonsnummer": "65016499794",
+        "type": "DNR",
+        "status": "OPPHOERT",
+        "folkeregistermetadata": {
+          "ajourholdstidspunkt": "2019-12-15T15:15:54",
+          "gyldighetstidspunkt": "2019-12-15T00:00:00",
+          "opphoerstidspunkt": null,
+          "kilde": "dsf-folkeregister-synkronisering",
+          "aarsak": null,
+          "sekvens": null
+        },
+        "metadata": {
+          "opplysningsId": "1f7bce0e-095b-4716-82de-b1e7bda96061",
+          "master": "Freg",
+          "endringer": [
+            {
+              "type": "OPPRETT",
+              "registrert": "2019-11-23T08:42:51.774",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "kilde": "SKATTEETATEN"
+            },
+            {
+              "type": "KORRIGER",
+              "registrert": "2019-12-15T15:16:06.394",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "kilde": "dsf-folkeregister-synkronisering"
+            }
+          ]
+        }
+      }
+    ],
+    "folkeregisterpersonstatus": [
+      {
+        "status": "midlertidig",
+        "forenkletStatus": "dNummer",
+        "folkeregistermetadata": {
+          "ajourholdstidspunkt": "2019-11-29T09:09:46.265",
+          "gyldighetstidspunkt": "2019-11-29T09:09:46.265",
+          "opphoerstidspunkt": null,
+          "kilde": "SKATTEETATEN",
+          "aarsak": null,
+          "sekvens": null
+        },
+        "metadata": {
+          "opplysningsId": "f3e71f18-6e8b-4787-a51a-8d10118d6e37",
+          "master": "Freg",
+          "endringer": [
+            {
+              "type": "OPPRETT",
+              "registrert": "2019-11-29T09:09:56.697",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "kilde": "SKATTEETATEN"
+            }
+          ]
+        }
+      }
+    ],
+    "fullmakt": [],
+    "identitetsgrunnlag": [
+      {
+        "status": "IKKE_KONTROLLERT",
+        "folkeregistermetadata": {
+          "ajourholdstidspunkt": "2019-11-30T08:50:11.504",
+          "gyldighetstidspunkt": "2019-11-30T08:50:11.504",
+          "opphoerstidspunkt": null,
+          "kilde": "skatteetaten",
+          "aarsak": null,
+          "sekvens": null
+        },
+        "metadata": {
+          "opplysningsId": "d5000a67-0770-4c95-9ced-f7715124319a",
+          "master": "Freg",
+          "endringer": [
+            {
+              "type": "OPPRETT",
+              "registrert": "2019-11-30T08:50:21.22",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "kilde": "skatteetaten"
+            }
+          ]
+        }
+      }
+    ],
+    "kontaktadresse": [],
+    "kontaktinformasjonForDoedsbo": [],
+    "kjoenn": [
+      {
+        "kjoenn": "KVINNE",
+        "folkeregistermetadata": {
+          "ajourholdstidspunkt": "2019-11-29T09:09:46.265",
+          "gyldighetstidspunkt": "2019-11-29T09:09:46.265",
+          "opphoerstidspunkt": null,
+          "kilde": "skatteetaten",
+          "aarsak": "SyntheticDataGen",
+          "sekvens": null
+        },
+        "metadata": {
+          "opplysningsId": "4be950a5-56b5-46bc-ace6-a004d2a1c8da",
+          "master": "Freg",
+          "endringer": [
+            {
+              "type": "OPPRETT",
+              "registrert": "2019-11-29T09:09:56.697",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "kilde": "skatteetaten"
+            }
+          ]
+        }
+      }
+    ],
+    "navn": [
+      {
+        "fornavn": "LEGITIM",
+        "mellomnavn": "",
+        "etternavn": "HENSIKT",
+        "forkortetNavn": "LEGITIM  HENSIKT",
+        "originaltNavn": null,
+        "folkeregistermetadata": {
+          "ajourholdstidspunkt": "2019-11-29T09:09:46.265",
+          "gyldighetstidspunkt": "2019-11-29T09:09:46.265",
+          "opphoerstidspunkt": null,
+          "kilde": "skatteetaten",
+          "aarsak": "SyntheticDataGen",
+          "sekvens": 0
+        },
+        "metadata": {
+          "opplysningsId": "e402d49a-9497-4666-b183-186c7d60beea",
+          "master": "Freg",
+          "endringer": [
+            {
+              "type": "OPPRETT",
+              "registrert": "2019-11-29T09:09:56.697",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "kilde": "skatteetaten"
+            }
+          ]
+        }
+      },
+      {
+        "fornavn": "LEGITIM",
+        "mellomnavn": "",
+        "etternavn": "HENSIKT",
+        "forkortetNavn": "LEGITIM  HENSIKT",
+        "originaltNavn": null,
+        "folkeregistermetadata": {
+          "ajourholdstidspunkt": "2019-11-29T09:09:46.265",
+          "gyldighetstidspunkt": "2019-11-29T09:09:46.265",
+          "opphoerstidspunkt": null,
+          "kilde": "skatteetaten",
+          "aarsak": "SyntheticDataGen",
+          "sekvens": 0
+        },
+        "metadata": {
+          "opplysningsId": "ccd6c516-19be-4ad1-be93-5e6aa77ff549",
+          "master": "Freg",
+          "endringer": [
+            {
+              "type": "OPPRETT",
+              "registrert": "2019-11-23T08:42:51.774",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "kilde": "skatteetaten"
+            },
+            {
+              "type": "KORRIGER",
+              "registrert": "2019-12-15T15:16:06.394",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "kilde": "skatteetaten"
+            }
+          ]
+        }
+      }
+    ],
+    "opphold": [],
+    "oppholdsadresse": [],
+    "sikkerhetstiltak": [],
+    "sivilstand": [
+      {
+        "type": "UOPPGITT",
+        "gyldigFraOgMed": "2019-11-29",
+        "myndighet": null,
+        "kommune": null,
+        "sted": null,
+        "utland": null,
+        "relatertVedSivilstand": null,
+        "bekreftelsesdato": null,
+        "folkeregistermetadata": {
+          "ajourholdstidspunkt": "2019-11-29T09:09:46.265",
+          "gyldighetstidspunkt": "2019-11-29T09:09:46.265",
+          "opphoerstidspunkt": null,
+          "kilde": "skatteetaten",
+          "aarsak": "SyntheticDataGen",
+          "sekvens": null
+        },
+        "metadata": {
+          "opplysningsId": "fa2bcab5-5169-479f-a98f-bab64a8e84ed",
+          "master": "Freg",
+          "endringer": [
+            {
+              "type": "OPPRETT",
+              "registrert": "2020-01-20T08:44:57.913",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "kilde": "skatteetaten"
+            }
+          ]
+        }
+      }
+    ],
+    "statsborgerskap": [
+      {
+        "land": "MAR",
+        "gyldigFraOgMed": null,
+        "gyldigTilOgMed": null,
+        "folkeregistermetadata": {
+          "ajourholdstidspunkt": "2019-11-29T09:09:46.265",
+          "gyldighetstidspunkt": "1908-07-09T10:09:46.315",
+          "opphoerstidspunkt": null,
+          "kilde": "skatteetaten",
+          "aarsak": "SyntheticDataGen",
+          "sekvens": null
+        },
+        "metadata": {
+          "opplysningsId": "b60a1a5c-9da2-4bab-ab21-7b2b0ff6f4d8",
+          "master": "Freg",
+          "endringer": [
+            {
+              "type": "OPPRETT",
+              "registrert": "2020-02-04T13:55:12.837",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "kilde": "skatteetaten"
+            }
+          ]
+        }
+      }
+    ],
+    "tilrettelagtKommunikasjon": [],
+    "utenlandskIdentifikasjonsnummer": [
+      {
+        "identifikasjonsnummer": "1575100211508",
+        "utstederland": "IRN",
+        "opphoert": "false",
+        "metadata": {
+          "opplysningsId": "ab1fd508-e40d-4b17-8dc9-d54f829af4b6",
+          "master": "Freg",
+          "endringer": [
+            {
+              "type": "OPPRETT",
+              "registrert": "2019-11-30T08:50:21.22",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "kilde": "skatteetaten"
+            }
+          ]
+        }
+      },
+      {
+        "identifikasjonsnummer": "1575100211508",
+        "utstederland": "CAN",
+        "opphoert": "false",
+        "metadata": {
+          "opplysningsId": "8f2d8565-0d4f-4ec7-8428-0ced8be8a7a7",
+          "master": "Freg",
+          "endringer": [
+            {
+              "type": "OPPRETT",
+              "registrert": "2019-11-30T08:50:21.22",
+              "registrertAv": "Folkeregisteret",
+              "systemkilde": "FREG",
+              "kilde": "skatteetaten"
+            }
+          ]
+        }
+      }
+    ],
+    "telefonnummer": [],
+    "innflyttingTilNorge": [],
+    "utflyttingFraNorge": []
+  },
+  "hentIdenter": {
+    "identer": [
+      {
+        "ident": "49070849800",
+        "historisk": "false",
+        "gruppe": "FOLKEREGISTERIDENT",
+        "metadata": null
+      },
+      {
+        "ident": "65016499794",
+        "historisk": "true",
+        "gruppe": "FOLKEREGISTERIDENT",
+        "metadata": null
+      },
+      {
+        "ident": "2890440058500",
+        "historisk": "true",
+        "gruppe": "AKTORID",
+        "metadata": null
+      },
+      {
+        "ident": "2443186919734",
+        "historisk": "false",
+        "gruppe": "AKTORID",
+        "metadata": null
+      }
+    ]
+  }
+}

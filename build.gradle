@@ -2,29 +2,87 @@ plugins {
     id 'application'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'org.jetbrains.kotlin.jvm' version '1.6.10'
+    id 'org.betterplugin.avro' version '0.19.2-SNAPSHOT'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'org.jsonschema2dataclass' version '4.2.0'
 }
 
-group "com.example"
+group "sokos.nav.no"
 version "0.0.1"
-mainClassName = "com.example.ApplicationKt"
 
 repositories {
     mavenCentral()
+    maven {
+        url 'https://packages.confluent.io/maven/'
+    }
 }
 
 dependencies {
     implementation "io.ktor:ktor-server-core:$ktor_version"
-    implementation "io.ktor:ktor-auth:$ktor_version"
-    implementation "io.ktor:ktor-auth-jwt:$ktor_version"
+    implementation "io.ktor:ktor-metrics:$ktor_version"
+    implementation "io.ktor:ktor-jackson:$ktor_version"
     implementation "io.ktor:ktor-server-netty:$ktor_version"
+    implementation "com.ibm.mq:com.ibm.mq.allclient:$mq_version"
+    implementation "ch.qos.logback:logback-core:$logback_version"
     implementation "ch.qos.logback:logback-classic:$logback_version"
+    implementation "net.logstash.logback:logstash-logback-encoder:$logstash_version"
+    implementation "io.ktor:ktor-metrics-micrometer:$ktor_version"
+    implementation "io.micrometer:micrometer-registry-prometheus:$prometheus_version"
+
+    implementation "org.apache.kafka:kafka-clients:$kafkaClientVersion"
+    implementation "org.apache.avro:avro:$avroVersion"
+    implementation "io.confluent:kafka-avro-serializer:$kafkaAvroSerializerVersion"
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation("com.google.code.gson:gson:2.9.0")
+
+
+    implementation "io.github.microutils:kotlin-logging-jvm:$kotlin_logging_version"
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.6.0"
+
+
     testImplementation "io.ktor:ktor-server-tests:$ktor_version"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+
+    testImplementation "org.junit.jupiter:junit-jupiter:$junit_version"
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = '16'
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = '16'
+}
+
+test {
+    useJUnitPlatform()
 }
 
 shadowJar {
     archiveBaseName.set("app")
     manifest {
-        attributes "Main-Class": "no.nav.kontoregister.person.mqadapter.BootstrapKt"
+        attributes "Main-Class": "no.nav.pdl.person.mqadapter.BootstrapKt"
     }
 }
+
+jsonSchema2Pojo {
+    targetPackage = 'no.nav.pdl.person.mqadapter.aapenPersonPdlDokument'
+    generateBuilders = true
+    includeGeneratedAnnotation = false
+
+    source.setFrom files("spec")
+
+
+    // ... — add other supported options as you need
+}
+
+test {
+    useJUnitPlatform {
+        testLogging {
+            events("passed", "skipped", "failed")
+        }
+    }
+}
+
