@@ -16,7 +16,7 @@ internal class AapenPersonPdlDokumentV1MapperTest {
 
         assertNotNull(jsonString)
 
-        var aapenPersonPdlDokumentV1: AapenPersonPdlDokumentV1 = Gson().fromJson<AapenPersonPdlDokumentV1>(jsonString, AapenPersonPdlDokumentV1::class.java)
+        val aapenPersonPdlDokumentV1: AapenPersonPdlDokumentV1 = Gson().fromJson<AapenPersonPdlDokumentV1>(jsonString, AapenPersonPdlDokumentV1::class.java)
 
         val aapenPersonPdlDokumentV1Mq: AapenPersonPdlDokumentV1Mq? =AapenPersonPdlDokumentV1Mapper.mapAapenPersonPdlDokumentV1(aapenPersonPdlDokumentV1)
 

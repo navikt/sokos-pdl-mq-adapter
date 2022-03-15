@@ -15,9 +15,8 @@ internal class AapenPersonPdlDokumentV1Test{
         var aapenPersonPdlDokumentV1: AapenPersonPdlDokumentV1 = Gson().fromJson<AapenPersonPdlDokumentV1>(jsonString, AapenPersonPdlDokumentV1::class.java)
 
         assertEquals("1000005033396", aapenPersonPdlDokumentV1._id)
-        assertEquals(2, aapenPersonPdlDokumentV1.value.hentIdenter.identer.size)
-        assertEquals("01076502397", aapenPersonPdlDokumentV1.value.hentIdenter.identer.get(0).ident)
-        assertEquals("1000005033396", aapenPersonPdlDokumentV1.value.hentIdenter.identer.get(1).ident)
+        assertEquals(1, aapenPersonPdlDokumentV1.value.hentPerson.folkeregisteridentifikator.size)
+        assertEquals("01076502397", aapenPersonPdlDokumentV1.value.hentPerson.folkeregisteridentifikator.get(0).identifikasjonsnummer)
         assertEquals(1, aapenPersonPdlDokumentV1.value.hentPerson.navn.size)
         assertEquals("IDAR", aapenPersonPdlDokumentV1.value.hentPerson.navn.get(0).fornavn)
     }

@@ -9,13 +9,13 @@
       "description": "Unik id for en person",
       "type": "string"
     },
-    "personInfo": {
-      "$ref": "#/$defs/personInfo"
+    "navn": {
+      "$ref": "#/$defs/navn"
     },
-    "identer": {
+    "folkeregisteridentifikatorTilMq": {
       "type": "array",
       "items": {
-        "$ref": "#/$defs/Ident"
+        "$ref": "#/$defs/FolkeregisteridentifikatorTilMq"
       },
       "description": "List av Identer til person."
     }
@@ -25,7 +25,7 @@
     "personInfo"
   ],
   "$defs": {
-    "personInfo": {
+    "navn": {
       "type": "object",
       "properties": {
         "fornavn": {
@@ -51,26 +51,58 @@
             "string",
             "null"
           ]
+        },
+        "metadata": {
+          "$ref": "#/$defs/MetadataTilMq"
         }
      }
    },
-  "Ident": {
-    "type": "object",
+  "FolkeregisteridentifikatorTilMq": {
+    "type": "array",
     "properties": {
-      "ident": {
+      "identifikasjonsnummer": {
         "type": "string",
         "example": "24117920441",
         "description": "Ident til person."
       },
-      "aktiv": {
-        "type": "boolean",
-        "example": true,
-        "description": "Hvis er aktiv ident."
-      },
-      "identifikatorType": {
+      "type": {
         "type": "string",
-        "example": "FOLKEREGISTERIDENTIFIKATOR",
-        "description": "Hva slags identifikator FOLKEREGISTERIDENTIFIKATOR eller N_PID eller AKTOR_ID"
+        "example": "DNR, FNR",
+        "description": "Hva slags identifikator DNR eller FNR"
+      },
+      "status": {
+        "type": "string",
+        "example": "I_BRUK, OPPHOERT",
+        "description": "Hva slags identifikator I_BRUK eller OPPHOERT"
+      },
+      "metadata": {
+        "$ref": "#/$defs/MetadataTilMq"
+      }
+    }
+  },
+  "MetadataTilMq": {
+    "type": "object",
+    "properties": {
+      "endringer": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/EndringerTilMq"
+        },
+        "description": "List av Endringer til person navn eller ident."
+      },
+      "historisk": "boolean"
+    }
+  },
+  "EndringerTilMq": {
+    "type": "object",
+    "properties": {
+      "type": {
+        "type": "string",
+        "example": true,
+        "description": "OPRETT eller KORRIGERT"
+      },
+      "registrert": {
+        "type": "string"
       }
     }
   }
