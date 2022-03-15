@@ -1,4 +1,6 @@
 plugins {
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'org.jetbrains.kotlin.jvm' version '1.6.10'
     id 'org.betterplugin.avro' version '0.19.2-SNAPSHOT'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
@@ -42,6 +44,7 @@ dependencies {
 
     testImplementation "io.ktor:ktor-server-tests:$ktor_version"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+
     testImplementation "org.junit.jupiter:junit-jupiter:$junit_version"
 }
 
@@ -82,3 +85,4 @@ test {
         }
     }
 }
+

@@ -3,7 +3,7 @@ name: Build and deploy
 on:
   push:
     branches:
-      - main
+      - master
   workflow_dispatch:
 
 env:
@@ -35,7 +35,7 @@ jobs:
   deploy-dev-gcp:
     name: Deploy to dev-gcp
     needs: build
-    if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -45,15 +45,3 @@ jobs:
           CLUSTER: dev-gcp
           RESOURCE: .nais/naiserator-preprod.yaml
 
-  deploy-prod:
-    name: Deploy to gcp prod
-    needs: [build, deploy-dev-gcp]
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: nais/deploy/actions/deploy@v1
-        env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: prod-gcp
-          RESOURCE: .nais/naiserator-prod.yaml
