@@ -22,8 +22,8 @@ data class Configuration(
         readProperty("OS_MQ_PORT"),
         readProperty("OS_MQ_QUEUE_MANAGER_NAME"),
         readProperty("OS_MQ_CHANNEL"),
-        readProperty("OS_MQ_USERNAME"),
-        readProperty("OS_MQ_PASSWORD")
+        readProperty("MQ_USERNAME"),
+        readProperty("MQ_PASSWORD")
     )
 
     open class MqProperties(
@@ -31,8 +31,8 @@ data class Configuration(
         val port: String = readProperty("UR_MQ_PORT"),
         val name: String = readProperty("UR_MQ_QUEUE_MANAGER_NAME"),
         val channel: String = readProperty("UR_MQ_CHANNEL"),
-        val username: String = readProperty("UR_MQ_USERNAME"),
-        val password: String = readProperty("UR_MQ_PASSWORD")
+        val username: String = readProperty("MQ_USERNAME"),
+        val password: String = readProperty("MQ_PASSWORD")
     ) {
         open fun connect(): Connection = MQConnectionFactory().also {
             it.transportType = WMQConstants.WMQ_CM_CLIENT
