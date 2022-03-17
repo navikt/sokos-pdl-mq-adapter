@@ -1,7 +1,10 @@
-# Project exclude paths
-
-.gradle
+target/
 build/
-build/tmp/
+out/
+.gradle
 .idea
-/.github/
+.run
+*.iws
+*.iml
+*.ipr
+*.env
