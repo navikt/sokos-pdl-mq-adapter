@@ -40,7 +40,7 @@ spec:
     path: /metrics
   ingresses:
     - https://sokos-pdl-person-mq-adapter.dev.intern.nav.no
-   env:
+  env:
     - name: KAFKA_SCHEMA_REGISTRY
       value: https://nav-dev-kafka-nav-dev.aivencloud.com:26487
     - name: KAFKA_CONSUMER_TOPIC
