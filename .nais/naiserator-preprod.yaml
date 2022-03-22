@@ -67,6 +67,6 @@ spec:
     - name: OS_MQ_QUEUE_MANAGER_NAME
       value: MQLS01
     - name: OS_MQ_CHANNEL
-      value: Q1_PDL_MQ_ADAPTER
+      value: Q1_SOKOS_PDL_PERSON
   envFrom:
     - secret: sokos-pdl-person-mq-adapter-secrets
