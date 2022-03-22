@@ -44,7 +44,7 @@ spec:
     - name: KAFKA_SCHEMA_REGISTRY
       value: https://nav-dev-kafka-nav-dev.aivencloud.com:26487
     - name: KAFKA_CONSUMER_TOPIC
-      value: okonomi.aapen-person-pdl-dokument-v1
+      value: aapen-person-pdl-dokument-v1
     - name: KAFKA_CONSUMER_GROUP_ID
       value: pdl-person-mq-adapter-group-id
 #      variabler for mq
