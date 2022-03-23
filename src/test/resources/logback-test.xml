@@ -11,7 +11,7 @@
         </encoder>
     </appender>
 
-    <logger name="no.nav.kontoregister" level="INFO"/>
+    <logger name="no.nav.pdl" level="INFO"/>
     <logger name="no.nav.vault.jdbc" level="WARN"/>
     <logger name="org.apache.kafka" level="WARN"/>
     <logger name="secureLogger" level="INFO">
