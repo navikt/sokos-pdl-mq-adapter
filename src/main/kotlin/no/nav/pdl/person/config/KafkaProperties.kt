@@ -15,9 +15,12 @@ import org.apache.kafka.clients.consumer.ConsumerConfig.KEY_DESERIALIZER_CLASS_C
 import org.apache.kafka.clients.consumer.ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG
 import org.apache.kafka.clients.consumer.ConsumerConfig.MAX_POLL_RECORDS_CONFIG
 import org.apache.kafka.clients.consumer.ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG
+import org.apache.kafka.clients.producer.ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG
+import org.apache.kafka.clients.producer.ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG
 import org.apache.kafka.common.config.SslConfigs
 import org.apache.kafka.common.security.auth.SecurityProtocol
 import org.apache.kafka.common.serialization.StringDeserializer
+import org.apache.kafka.common.serialization.StringSerializer
 
 fun Configuration.KafkaConsumer.propMap(useGroupId: Boolean, useSecurity: Boolean) = Properties().apply {
     if (useGroupId) {
@@ -29,7 +32,9 @@ fun Configuration.KafkaConsumer.propMap(useGroupId: Boolean, useSecurity: Boolea
 
     put(BOOTSTRAP_SERVERS_CONFIG, kafkaBrokers)
     put(KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer::class.java.name)
-    put(VALUE_DESERIALIZER_CLASS_CONFIG, KafkaAvroDeserializer::class.java.name)
+    put(VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer::class.java.name)
+    put(KEY_SERIALIZER_CLASS_CONFIG, StringSerializer::class.java.name)
+    put(VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer::class.java.name)
     put(MAX_POLL_RECORDS_CONFIG, maxPollRecords)
     put(MAX_POLL_INTERVAL_MS_CONFIG, maxPollInterval)
     put(ENABLE_AUTO_COMMIT_CONFIG, enableAutoCommit)

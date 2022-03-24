@@ -32,7 +32,7 @@ fun main() {
 
     GlobalScope.launch {
         do try {
-            val kafkaConsumer: KafkaConsumer<String, AapenPersonPdlDokumentV1> =
+            val kafkaConsumer: KafkaConsumer<String, String> =
                 KafkaConsumer(
                     appConfig.kafkaConsumer.propMap(useGroupId = true, useSecurity = appConfig.useAuthentication))
             val mqProducer = MqProducer(appConfig)

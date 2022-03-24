@@ -26,14 +26,14 @@ private val secureLogger = KotlinLogging.logger(SECURE_LOGGER_NAME)
 
 class AapenPersonPdlDokumentV1Consumer(
     private val kafkaTopic: String,
-    private val kafkaConsumer: KafkaConsumer<String, AapenPersonPdlDokumentV1>,
+    private val kafkaConsumer: KafkaConsumer<String, String>,
     private val mqProducer: MqProducer
 ) {
     suspend fun listen(appState: ApplicationState) {
         kafkaConsumer.use { kafkaConsumer ->
             kafkaConsumer.subscribe(listOf(kafkaTopic))
             do {
-                val consumerRecords: ConsumerRecords<String, AapenPersonPdlDokumentV1> = kafkaConsumer.poll(Duration.ofMillis(0))
+                val consumerRecords: ConsumerRecords<String, String> = kafkaConsumer.poll(Duration.ofMillis(0))
                 if (!consumerRecords.isEmpty) {
                     logger.debug("Mottatt ${consumerRecords.count()} meldinger fra Kontoregister person")
                     consumerRecords
@@ -49,17 +49,18 @@ class AapenPersonPdlDokumentV1Consumer(
         }
     }
 
-    private suspend fun onRecord(record: ConsumerRecord<String, AapenPersonPdlDokumentV1>)  = coroutineScope {
+    private suspend fun onRecord(record: ConsumerRecord<String, String>)  = coroutineScope {
         MDC.put(X_CORRELATION_ID, UUID.randomUUID().toString())
 
         withContext(coroutineContext) {
             logger.info("Record mottatt med offset = ${record.offset()}")
             secureLogger.info("Record: key = ${record.key()}, value = ${record.value()}")
             if (record.value() != null) {
-                val aapenPersonPdlDokumentV1 = mapAapenPersonPdlDokumentV1(record.value())
+                /*val aapenPersonPdlDokumentV1 = mapAapenPersonPdlDokumentV1(record.value())
                 if (aapenPersonPdlDokumentV1 != null) {
                     mqProducer.send(aapenPersonPdlDokumentV1.tilJson())
-                }
+                }*/
+                mqProducer.send(record.value())
             }
         }
     }
