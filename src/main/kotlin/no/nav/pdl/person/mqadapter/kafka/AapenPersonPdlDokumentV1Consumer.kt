@@ -1,14 +1,10 @@
 package no.nav.pdl.person.mqadapter.kafka
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import java.time.Duration
-import java.util.*
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.time.delay
 import kotlinx.coroutines.withContext
 import mu.KotlinLogging
-import no.nav.pdl.aapenpersonpdldokumentv1.AapenPersonPdlDokumentV1
-import no.nav.pdl.person.AapenPersonPdlDokumentV1Mapper.mapAapenPersonPdlDokumentV1
 import no.nav.pdl.person.mqadapter.ApplicationState
 import no.nav.pdl.person.mqadapter.SECURE_LOGGER_NAME
 import no.nav.pdl.person.mqadapter.X_CORRELATION_ID
@@ -19,6 +15,8 @@ import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.kafka.clients.consumer.ConsumerRecords
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import org.slf4j.MDC
+import java.time.Duration
+import java.util.*
 
 private val logger = KotlinLogging.logger {}
 private val secureLogger = KotlinLogging.logger(SECURE_LOGGER_NAME)

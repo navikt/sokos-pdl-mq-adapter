@@ -5,7 +5,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import mu.KotlinLogging
-import no.nav.pdl.aapenpersonpdldokumentv1.AapenPersonPdlDokumentV1
 import no.nav.pdl.person.config.Configuration
 import no.nav.pdl.person.config.propMap
 import no.nav.pdl.person.mqadapter.kafka.AapenPersonPdlDokumentV1Consumer
