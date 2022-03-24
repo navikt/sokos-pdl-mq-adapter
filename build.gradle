@@ -61,19 +61,8 @@ test {
 shadowJar {
     archiveBaseName.set("app")
     manifest {
-        attributes "Main-Class": "no.nav.pdl.person.mqadapter.BootstrapKt"
+        attributes "Main-Class": "no.nav.sokos.pdladapter.person.mqadapter.BootstrapKt"
     }
-}
-
-jsonSchema2Pojo {
-    targetPackage = 'no.nav.pdl.person.mqadapter.aapenPersonPdlDokument'
-    generateBuilders = true
-    includeGeneratedAnnotation = false
-
-    source.setFrom files("spec")
-
-
-    // ... — add other supported options as you need
 }
 
 test {
