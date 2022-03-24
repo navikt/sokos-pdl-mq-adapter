@@ -1,4 +1,4 @@
-package no.nav.pdl.person.config
+package no.nav.sokos.pdladapter.person.config
 
 import com.ibm.mq.jms.MQConnectionFactory
 import com.ibm.msg.client.jms.JmsConstants

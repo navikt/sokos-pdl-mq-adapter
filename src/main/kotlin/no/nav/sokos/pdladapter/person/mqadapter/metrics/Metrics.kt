@@ -1,4 +1,4 @@
-package no.nav.pdl.person.mqadapter.metrics
+package no.nav.sokos.pdladapter.person.mqadapter.metrics
 
 import io.ktor.application.Application
 import io.ktor.application.call

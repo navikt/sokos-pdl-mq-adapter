@@ -1,16 +1,13 @@
-package no.nav.pdl.person.mqadapter.kafka
+package no.nav.sokos.pdladapter.person.mqadapter.kafka
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.time.delay
-import kotlinx.coroutines.withContext
 import mu.KotlinLogging
-import no.nav.pdl.person.mqadapter.ApplicationState
-import no.nav.pdl.person.mqadapter.SECURE_LOGGER_NAME
-import no.nav.pdl.person.mqadapter.X_CORRELATION_ID
-import no.nav.pdl.person.mqadapter.aapenPersonPdlDokument.AapenPersonPdlDokumentV1Mq
-import no.nav.pdl.person.mqadapter.metrics.Metrics
-import no.nav.pdl.person.mqadapter.mq.MqProducer
+import no.nav.sokos.pdladapter.person.mqadapter.ApplicationState
+import no.nav.sokos.pdladapter.person.mqadapter.SECURE_LOGGER_NAME
+import no.nav.sokos.pdladapter.person.mqadapter.X_CORRELATION_ID
+import no.nav.sokos.pdladapter.person.mqadapter.metrics.Metrics
+import no.nav.sokos.pdladapter.person.mqadapter.mq.MqProducer
+import no.nav.sokos.pdladapter.retry
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.kafka.clients.consumer.ConsumerRecords
 import org.apache.kafka.clients.consumer.KafkaConsumer
@@ -22,7 +19,7 @@ private val logger = KotlinLogging.logger {}
 private val secureLogger = KotlinLogging.logger(SECURE_LOGGER_NAME)
 
 
-class AapenPersonPdlDokumentV1Consumer(
+class PdlPersonDokumentRoute(
     private val kafkaTopic: String,
     private val kafkaConsumer: KafkaConsumer<String, String>,
     private val mqProducer: MqProducer
@@ -37,7 +34,10 @@ class AapenPersonPdlDokumentV1Consumer(
                     consumerRecords
                         .forEach { record ->
                             Metrics.antallMeldingerMottattFraKafka.inc()
-                            onRecord(record)
+                            getRecordValue(record)?.let {
+                                retry { mqProducer.sendTilOs(it) }
+                                retry { mqProducer.sendTilUr(it) }
+                            }
                         }
                     kafkaConsumer.commitSync()
                 } else {
@@ -47,23 +47,10 @@ class AapenPersonPdlDokumentV1Consumer(
         }
     }
 
-    private suspend fun onRecord(record: ConsumerRecord<String, String>)  = coroutineScope {
+    private fun getRecordValue(record: ConsumerRecord<String, String>): String? {
         MDC.put(X_CORRELATION_ID, UUID.randomUUID().toString())
-
-        withContext(coroutineContext) {
-            logger.info("Record mottatt med offset = ${record.offset()}")
-            secureLogger.info("Record: key = ${record.key()}, value = ${record.value()}")
-            if (record.value() != null) {
-                /*val aapenPersonPdlDokumentV1 = mapAapenPersonPdlDokumentV1(record.value())
-                if (aapenPersonPdlDokumentV1 != null) {
-                    mqProducer.send(aapenPersonPdlDokumentV1.tilJson())
-                }*/
-                mqProducer.send(record.value())
-            }
-        }
+//        logger.info("Record mottatt med offset = ${record.offset()}")
+//        secureLogger.info("Record: key = ${record.key()}, value = ${record.value()}")
+        return record.value()
     }
-}
-
-fun AapenPersonPdlDokumentV1Mq.tilJson(): String {
-    return jacksonObjectMapper().writeValueAsString(this)
 }

@@ -1,8 +1,8 @@
 package devtools
 
 
-import no.nav.pdl.person.config.Configuration
-import no.nav.pdl.person.config.propMap
+import no.nav.sokos.pdladapter.person.config.Configuration
+import no.nav.sokos.pdladapter.person.config.propMap
 import org.apache.kafka.clients.producer.KafkaProducer
 import org.apache.kafka.clients.producer.ProducerRecord
 import java.io.File

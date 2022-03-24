@@ -1,15 +1,15 @@
-package no.nav.pdl.person.mqadapter
+package no.nav.sokos.pdladapter.person.mqadapter
 
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import mu.KotlinLogging
-import no.nav.pdl.person.config.Configuration
-import no.nav.pdl.person.config.propMap
-import no.nav.pdl.person.mqadapter.kafka.AapenPersonPdlDokumentV1Consumer
-import no.nav.pdl.person.mqadapter.metrics.Metrics
-import no.nav.pdl.person.mqadapter.mq.MqProducer
+import no.nav.sokos.pdladapter.person.config.Configuration
+import no.nav.sokos.pdladapter.person.config.propMap
+import no.nav.sokos.pdladapter.person.mqadapter.kafka.PdlPersonDokumentRoute
+import no.nav.sokos.pdladapter.person.mqadapter.metrics.Metrics
+import no.nav.sokos.pdladapter.person.mqadapter.mq.MqProducer
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import kotlin.properties.Delegates
 
@@ -37,7 +37,7 @@ fun main() {
             val mqProducer = MqProducer(appConfig)
             logger.info("MqProducer er opprettet")
             logger.info { "Applikasjonen er startet" }
-            AapenPersonPdlDokumentV1Consumer(appConfig.kafkaConsumer.topic, kafkaConsumer, mqProducer).listen(appState)
+            PdlPersonDokumentRoute(appConfig.kafkaConsumer.topic, kafkaConsumer, mqProducer).listen(appState)
         } catch (ex: Exception) {
             logger.error("En uventet feil har oppstått, prøver igjen", ex)
             delay(10000)

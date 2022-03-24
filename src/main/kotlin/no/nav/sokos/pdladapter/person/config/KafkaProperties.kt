@@ -1,4 +1,4 @@
-package no.nav.pdl.person.config
+package no.nav.sokos.pdladapter.person.config
 
 import io.confluent.kafka.schemaregistry.client.SchemaRegistryClientConfig
 import io.confluent.kafka.schemaregistry.client.SchemaRegistryClientConfig.BASIC_AUTH_CREDENTIALS_SOURCE

@@ -1,12 +1,12 @@
-package no.nav.pdl.person.mqadapter
+package no.nav.sokos.pdladapter.person.mqadapter
 
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.engine.stop
 import io.ktor.server.netty.Netty
+import no.nav.sokos.pdladapter.person.mqadapter.metrics.installMetrics
+import no.nav.sokos.pdladapter.person.mqadapter.plugins.configureSerialization
+import no.nav.sokos.pdladapter.person.mqadapter.plugins.naisApi
 import java.util.concurrent.TimeUnit
-import no.nav.pdl.person.mqadapter.metrics.installMetrics
-import no.nav.pdl.person.mqadapter.plugins.configureSerialization
-import no.nav.pdl.person.mqadapter.plugins.naisApi
 
 class HttpServer(
     appState: ApplicationState,

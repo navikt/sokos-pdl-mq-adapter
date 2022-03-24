@@ -1,4 +1,4 @@
-package no.nav.pdl.person.mqadapter.plugins
+package no.nav.sokos.pdladapter.person.mqadapter.plugins
 
 import io.ktor.application.Application
 import io.ktor.application.install
