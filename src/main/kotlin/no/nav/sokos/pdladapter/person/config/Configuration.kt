@@ -47,22 +47,16 @@ data class Configuration(
 
 
     data class KafkaConsumer(
-        val kafkaBrokers: String = readProperty("KAFKA_BROKERS"),
-        val groupId: String = readProperty("KAFKA_CONSUMER_GROUP_ID", ""),
+        val onPremBrokers: String = readProperty("ON_PREM_KAFKA_BROKERS"),
+        val groupId: String = readProperty("KAFKA_CONSUMER_GROUP_ID"),
         val maxPollRecords: String = "1",
         val maxPollInterval: String = "200000",
         val enableAutoCommit: String = "false",
-        val autoOffsetReset: String = "latest",
+        val autoOffsetReset: String = "none",
         val topic: String = readProperty("KAFKA_CONSUMER_TOPIC"),
+        val username: String = readProperty("KAFKA_CONSUMER_USERNAME"),
+        val password: String = readProperty("KAFKA_CONSUMER_PASSWORD"),
         val schemaRegistryUrl: String = readProperty("KAFKA_SCHEMA_REGISTRY"),
-        val schemaRegistryUser: String = readProperty("KAFKA_SCHEMA_REGISTRY_USER", ""),
-        val schemaRegistryPassword: String = readProperty("KAFKA_SCHEMA_REGISTRY_PASSWORD", ""),
-        val javaKeystore: String = "jks",
-        val pkcs12: String = "PKCS12",
-        val truststore: String = readProperty("KAFKA_TRUSTSTORE_PATH", ""),
-        val truststorePassword: String = readProperty("KAFKA_CREDSTORE_PASSWORD", ""),
-        val keystoreLocation: String = readProperty("KAFKA_KEYSTORE_PATH", ""),
-        val keystorePassword: String = readProperty("KAFKA_CREDSTORE_PASSWORD", ""),
     )
 }
 

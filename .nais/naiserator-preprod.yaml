@@ -41,6 +41,8 @@ spec:
   ingresses:
     - https://sokos-pdl-person-mq-adapter.dev.intern.nav.no
   env:
+    - name: ON_PREM_KAFKA_BROKERS
+      value: SSL://b27apvl00045.preprod.local:8443,SSL://b27apvl00046.preprod.local:8443,SSL://b27apvl00047.preprod.local:8443
     - name: KAFKA_SCHEMA_REGISTRY
       value: https://nav-dev-kafka-nav-dev.aivencloud.com:26487
     - name: KAFKA_CONSUMER_TOPIC
