@@ -28,7 +28,7 @@ Start kafka avhengigheter og postgres databse ved å kjøre
 ```
 docker compose up -d
 ``` 
-i mappen som har docker-compose.yml fila
+i mappen som har docker-compose.yml fila.
 
 Det finnes en kafka produser i test pakken devtools som produserer identhendelse og en PDL mock server, denne har hardokdede responser
 
