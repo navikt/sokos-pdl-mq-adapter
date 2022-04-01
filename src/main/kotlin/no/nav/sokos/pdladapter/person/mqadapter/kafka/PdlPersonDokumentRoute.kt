@@ -30,7 +30,7 @@ class PdlPersonDokumentRoute(
             do {
                 val consumerRecords: ConsumerRecords<String, String> = kafkaConsumer.poll(Duration.ofMillis(0))
                 if (!consumerRecords.isEmpty) {
-                    logger.info("Mottatt ${consumerRecords.count()} meldinger fra Kontoregister person")
+                    logger.info("Mottatt ${consumerRecords.count()} meldinger fra Kafka person")
                     consumerRecords
                         .forEach { record ->
                             logger.info { "Behandler melding" }
@@ -51,8 +51,8 @@ class PdlPersonDokumentRoute(
 
     private fun getRecordValue(record: ConsumerRecord<String, String>): String? {
         MDC.put(X_CORRELATION_ID, UUID.randomUUID().toString())
-//        logger.info("Record mottatt med offset = ${record.offset()}")
-//        secureLogger.info("Record: key = ${record.key()}, value = ${record.value()}")
+        logger.info("Record mottatt med offset = ${record.offset()}")
+        secureLogger.info("Record: key = ${record.key()}, value = ${record.value()}")
         return record.value()
     }
 }
