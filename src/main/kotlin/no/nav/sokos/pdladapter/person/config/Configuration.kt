@@ -3,8 +3,8 @@ package no.nav.sokos.pdladapter.person.config
 import com.ibm.mq.jms.MQConnectionFactory
 import com.ibm.msg.client.jms.JmsConstants
 import com.ibm.msg.client.wmq.WMQConstants
-import mu.KotlinLogging
 import javax.jms.Connection
+import mu.KotlinLogging
 
 private val logger = KotlinLogging.logger {  }
 
@@ -52,7 +52,7 @@ data class Configuration(
         val maxPollRecords: String = "1",
         val maxPollInterval: String = "200000",
         val enableAutoCommit: String = "false",
-        val autoOffsetReset: String = "none",
+        val autoOffsetReset: String = "latest",
         val topic: String = readProperty("KAFKA_CONSUMER_TOPIC"),
         val username: String = readProperty("KAFKA_CONSUMER_USERNAME"),
         val password: String = readProperty("KAFKA_CONSUMER_PASSWORD"),
