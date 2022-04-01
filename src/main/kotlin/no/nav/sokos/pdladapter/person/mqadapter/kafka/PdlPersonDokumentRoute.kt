@@ -30,9 +30,11 @@ class PdlPersonDokumentRoute(
             do {
                 val consumerRecords: ConsumerRecords<String, String> = kafkaConsumer.poll(Duration.ofMillis(0))
                 if (!consumerRecords.isEmpty) {
-                    logger.debug("Mottatt ${consumerRecords.count()} meldinger fra Kontoregister person")
+                    logger.info("Mottatt ${consumerRecords.count()} meldinger fra Kontoregister person")
                     consumerRecords
                         .forEach { record ->
+                            logger.info { "Behandler melding" }
+                            secureLogger.info { "Fått melding fra kafka: ${record.value()}" }
                             Metrics.antallMeldingerMottattFraKafka.inc()
                             getRecordValue(record)?.let {
                                 retry { mqProducer.sendTilOs(it) }
