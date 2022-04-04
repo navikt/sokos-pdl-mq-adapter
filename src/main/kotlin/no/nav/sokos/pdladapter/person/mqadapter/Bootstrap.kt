@@ -1,5 +1,6 @@
 package no.nav.sokos.pdladapter.person.mqadapter
 
+import kotlin.properties.Delegates
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -11,7 +12,6 @@ import no.nav.sokos.pdladapter.person.mqadapter.kafka.PdlPersonDokumentRoute
 import no.nav.sokos.pdladapter.person.mqadapter.metrics.Metrics
 import no.nav.sokos.pdladapter.person.mqadapter.mq.MqProducer
 import org.apache.kafka.clients.consumer.KafkaConsumer
-import kotlin.properties.Delegates
 
 private val logger = KotlinLogging.logger {}
 const val SECURE_LOGGER_NAME = "secureLogger"
@@ -32,12 +32,12 @@ fun main() {
     GlobalScope.launch {
         do try {
             val kafkaConsumer: KafkaConsumer<String, String> =
-                KafkaConsumer(
-                    appConfig.kafkaConsumer.propMap(useGroupId = true, useSecurity = appConfig.useAuthentication))
+                KafkaConsumer(appConfig.kafkaConsumerConfig.propMap(useGroupId = true, useSecurity = appConfig.useAuthentication))
+
             val mqProducer = MqProducer(appConfig)
             logger.info("MqProducer er opprettet")
             logger.info { "Applikasjonen er startet" }
-            PdlPersonDokumentRoute(appConfig.kafkaConsumer.topic, kafkaConsumer, mqProducer).listen(appState)
+            PdlPersonDokumentRoute(appConfig.kafkaConsumerConfig.topic, kafkaConsumer, mqProducer).listen(appState)
         } catch (ex: Exception) {
             logger.error("En uventet feil har oppstått, prøver igjen", ex)
             delay(10000)

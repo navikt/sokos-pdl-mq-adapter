@@ -2,13 +2,13 @@ package no.nav.sokos.pdladapter.person.mqadapter.mq
 
 import com.ibm.mq.jms.MQQueue
 import com.ibm.msg.client.wmq.WMQConstants
+import javax.jms.MessageProducer
+import javax.jms.Session
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import mu.KotlinLogging
 import no.nav.sokos.pdladapter.person.config.Configuration
 import no.nav.sokos.pdladapter.person.mqadapter.SECURE_LOGGER_NAME
-import javax.jms.MessageProducer
-import javax.jms.Session
 
 private val logger = KotlinLogging.logger {}
 private val secureLogger = KotlinLogging.logger(SECURE_LOGGER_NAME)
@@ -29,9 +29,9 @@ class MqProducer(private val config: Configuration) {
     private suspend fun connect() {
         logger.info("Connecting to MQ...")
             connected = withTimeout(timeOutTerskel) {
-                val urMqConnection = config.mqProducerConfig.connect()
+                val urMqConnection = config.urMqProducerConfig.connect()
                 urMqSession = urMqConnection.createSession(false, Session.AUTO_ACKNOWLEDGE)
-                val urQueue = (urMqSession.createQueue(config.mqProducerConfig.queue) as MQQueue).apply {
+                val urQueue = (urMqSession.createQueue(config.urMqProducerConfig.queue) as MQQueue).apply {
                     targetClient = WMQConstants.WMQ_CLIENT_NONJMS_MQ
                     messageBodyStyle = WMQConstants.WMQ_MESSAGE_BODY_MQ
                 }
