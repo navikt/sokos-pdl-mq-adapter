@@ -1,7 +1,10 @@
 package no.nav.sokos.pdladapter.person.mqadapter.mq
 
+import com.ibm.mq.jms.MQConnectionFactory
 import com.ibm.mq.jms.MQQueue
+import com.ibm.msg.client.jms.JmsConstants
 import com.ibm.msg.client.wmq.WMQConstants
+import javax.jms.Connection
 import javax.jms.MessageProducer
 import javax.jms.Session
 import kotlinx.coroutines.runBlocking
@@ -28,28 +31,28 @@ class MqProducer(private val config: Configuration) {
 
     private suspend fun connect() {
         logger.info("Connecting to MQ...")
-            connected = withTimeout(timeOutTerskel) {
-                val urMqConnection = config.urMqProducerConfig.connect()
-                urSession = urMqConnection.createSession(false, Session.AUTO_ACKNOWLEDGE)
-                val urQueue = (urSession.createQueue(config.urMqProducerConfig.queue) as MQQueue).apply {
-                    targetClient = WMQConstants.WMQ_CLIENT_NONJMS_MQ
-                    messageBodyStyle = WMQConstants.WMQ_MESSAGE_BODY_MQ
-                }
-                urMessageProducer = urSession.createProducer(urQueue)
-                urMqConnection.start()
-
-                val osMqConnection = config.osMqProducerConfig.connect()
-                osSession = osMqConnection.createSession(false, Session.AUTO_ACKNOWLEDGE)
-                val osQueue = (osSession.createQueue(config.osMqProducerConfig.queue) as MQQueue).apply {
-                    targetClient = WMQConstants.WMQ_CLIENT_NONJMS_MQ
-                    messageBodyStyle = WMQConstants.WMQ_MESSAGE_BODY_MQ
-                }
-                osMessageProducer = osSession.createProducer(osQueue)
-                osMqConnection.start()
-
-                true
+        connected = withTimeout(timeOutTerskel) {
+            val urMqConnection = config.urMqProducerConfig.connect()
+            urSession = urMqConnection.createSession(false, Session.AUTO_ACKNOWLEDGE)
+            val urQueue = (urSession.createQueue(config.urMqProducerConfig.queue) as MQQueue).apply {
+                targetClient = WMQConstants.WMQ_CLIENT_NONJMS_MQ
+                messageBodyStyle = WMQConstants.WMQ_MESSAGE_BODY_MQ
             }
-                logger.info("Connected to MQ")
+            urMessageProducer = urSession.createProducer(urQueue)
+            urMqConnection.start()
+
+            val osMqConnection = config.osMqProducerConfig.connect()
+            osSession = osMqConnection.createSession(false, Session.AUTO_ACKNOWLEDGE)
+            val osQueue = (osSession.createQueue(config.osMqProducerConfig.queue) as MQQueue).apply {
+                targetClient = WMQConstants.WMQ_CLIENT_NONJMS_MQ
+                messageBodyStyle = WMQConstants.WMQ_MESSAGE_BODY_MQ
+            }
+            osMessageProducer = osSession.createProducer(osQueue)
+            osMqConnection.start()
+
+            true
+        }
+        logger.info("Connected to MQ")
     }
 
     suspend fun sendTilUr(message: String) {
@@ -66,5 +69,17 @@ class MqProducer(private val config: Configuration) {
         secureLogger.info("Sender melding til MQ: $message")
         osMessageProducer.send(osSession.createTextMessage(message))
     }
+
+    private fun Configuration.MqProducerConfig.connect(): Connection = MQConnectionFactory().also {
+        it.transportType = WMQConstants.WMQ_CM_CLIENT
+        it.hostName = host
+        it.port = port.toInt()
+        it.channel = channel
+        it.queueManager = name
+        it.targetClientMatching = true
+        it.setBooleanProperty(JmsConstants.USER_AUTHENTICATION_MQCSP, true)
+    }
+        .createConnection(username, password)
+
 }
 
