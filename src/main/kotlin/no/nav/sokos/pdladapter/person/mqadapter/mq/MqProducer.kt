@@ -30,29 +30,30 @@ class MqProducer(private val config: Configuration) {
     }
 
     private suspend fun connect() {
-        logger.info("Connecting to MQ...")
+        logger.info("Kobler til MQ")
         connected = withTimeout(timeOutTerskel) {
-            val urMqConnection = config.urMqProducerConfig.connect()
-            urSession = urMqConnection.createSession(false, Session.AUTO_ACKNOWLEDGE)
-            val urQueue = (urSession.createQueue(config.urMqProducerConfig.queue) as MQQueue).apply {
-                targetClient = WMQConstants.WMQ_CLIENT_NONJMS_MQ
-                messageBodyStyle = WMQConstants.WMQ_MESSAGE_BODY_MQ
-            }
-            urMessageProducer = urSession.createProducer(urQueue)
-            urMqConnection.start()
+            val urOppsett = initialiserMq(config.urMqProducerConfig.connect(), config.urMqProducerConfig.queue)
+            urMessageProducer = urOppsett.first
+            urSession = urOppsett.second
 
-            val osMqConnection = config.osMqProducerConfig.connect()
-            osSession = osMqConnection.createSession(false, Session.AUTO_ACKNOWLEDGE)
-            val osQueue = (osSession.createQueue(config.osMqProducerConfig.queue) as MQQueue).apply {
-                targetClient = WMQConstants.WMQ_CLIENT_NONJMS_MQ
-                messageBodyStyle = WMQConstants.WMQ_MESSAGE_BODY_MQ
-            }
-            osMessageProducer = osSession.createProducer(osQueue)
-            osMqConnection.start()
+            val osOppsett = initialiserMq(config.osMqProducerConfig.connect(), config.osMqProducerConfig.queue)
+            osMessageProducer = osOppsett.first
+            osSession = osOppsett.second
 
             true
         }
-        logger.info("Connected to MQ")
+    }
+
+    private fun initialiserMq(connection: Connection, queueNavn: String): Pair<MessageProducer, Session> {
+        val session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE)
+        val queue = (session.createQueue(queueNavn) as MQQueue).apply {
+            targetClient = WMQConstants.WMQ_CLIENT_NONJMS_MQ
+            messageBodyStyle = WMQConstants.WMQ_MESSAGE_BODY_MQ
+        }
+        val messageProducer = session.createProducer(queue)
+        connection.start()
+        logger.info("Koblet til MQ $queueNavn")
+        return Pair(messageProducer, session)
     }
 
     suspend fun sendTilUr(message: String) {

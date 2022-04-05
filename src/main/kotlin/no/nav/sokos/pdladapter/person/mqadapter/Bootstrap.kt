@@ -35,7 +35,6 @@ fun main() {
                 KafkaConsumer(appConfig.kafkaConsumerConfig.propMap(useGroupId = true, useSecurity = appConfig.useAuthentication))
 
             val mqProducer = MqProducer(appConfig)
-            logger.info("MqProducer er opprettet")
             logger.info { "Applikasjonen er startet" }
             PdlPersonDokumentRoute(appConfig.kafkaConsumerConfig.topic, kafkaConsumer, mqProducer).listen(appState)
         } catch (ex: Exception) {
