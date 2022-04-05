@@ -34,7 +34,7 @@ class PdlPersonDokumentRoute(
                         .forEach { record ->
                             MDC.put(X_CORRELATION_ID, UUID.randomUUID().toString())
                             Metrics.antallMeldingerMottattFraKafka.inc()
-                            logger.info("Record mottatt med offset = ${record.offset()}") //TODO Vurdere om dette er nok informasjon for å gjenopprette topic-offset
+                            logger.info("Record mottatt med offset = ${record.offset()}, partisjon = ${record.partition()}, topic = ${record.topic()}")
                             secureLogger.info("Record: key = ${record.key()}, value = ${record.value()}")
                             record.value()?.let {
                                 retry { mqProducer.sendTilOs(it) }
