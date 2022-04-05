@@ -5,7 +5,7 @@ Opprett en run configuration for Bootstrap.kt og angi properties nedenfor som en
 ```properties
 # suppress inspection "UnusedProperty" for whole file
 USE_AUTHENTICATION=false;
-KAFKA_BROKERS=0.0.0.0:9092;
+ON_PREM_KAFKA_BROKERS=0.0.0.0:9092;
 KAFKA_SCHEMA_REGISTRY=http://0.0.0.0:8081;
 KAFKA_CONSUMER_TOPIC=aapen-person-pdl-dokument-v1;
 KAFKA_CONSUMER_GROUP_ID=pdl-person-mq-adapter-group-id;
@@ -22,6 +22,9 @@ OS_MQ_CHANNEL=DEV.APP.SVRCONN;
 MQ_USERNAME=app;
 MQ_PASSWORD=passw0rd;
 HTTP_PORT=8042;
+KAFKA_CONSUMER_USERNAME="";
+KAFKA_CONSUMER_PASSWORD="";
+LOG_APPENDER=CONSOLE;
 ```
 ### docker-compose
 Start kafka avhengigheter og postgres databse ved å kjøre

@@ -18,10 +18,6 @@ data class Configuration(
     data class KafkaConsumerConfig(
         val onPremBrokers: String = readProperty("ON_PREM_KAFKA_BROKERS"),
         val groupId: String = readProperty("KAFKA_CONSUMER_GROUP_ID"),
-        val maxPollRecords: String = "1",
-        val maxPollInterval: String = "200000",
-        val enableAutoCommit: String = "false",
-        val autoOffsetReset: String = "none", //TODO Implementere støtte for å håndtere at man mister offset for topic
         val topic: String = readProperty("KAFKA_CONSUMER_TOPIC"),
         val username: String = readProperty("KAFKA_CONSUMER_USERNAME"),
         val password: String = readProperty("KAFKA_CONSUMER_PASSWORD"),

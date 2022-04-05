@@ -16,35 +16,35 @@ private const val timeOutTerskel: Long = 20_000
 
 
 class MqProducer(private val config: Configuration) {
-    private lateinit var urMqSession: Session
-    private lateinit var osMqSession: Session
-    private lateinit var mqProducer: MessageProducer
+    private lateinit var urSession: Session
+    private lateinit var osSession: Session
+    private lateinit var urMessageProducer: MessageProducer
+    private lateinit var osMessageProducer: MessageProducer
     private var connected: Boolean = false
 
     init {
-        runBlocking { connect() }
+        runBlocking { connect() }  //TODO Undersøke om det er en riktigere måte å gjøre dette på
     }
-
 
     private suspend fun connect() {
         logger.info("Connecting to MQ...")
             connected = withTimeout(timeOutTerskel) {
                 val urMqConnection = config.urMqProducerConfig.connect()
-                urMqSession = urMqConnection.createSession(false, Session.AUTO_ACKNOWLEDGE)
-                val urQueue = (urMqSession.createQueue(config.urMqProducerConfig.queue) as MQQueue).apply {
+                urSession = urMqConnection.createSession(false, Session.AUTO_ACKNOWLEDGE)
+                val urQueue = (urSession.createQueue(config.urMqProducerConfig.queue) as MQQueue).apply {
                     targetClient = WMQConstants.WMQ_CLIENT_NONJMS_MQ
                     messageBodyStyle = WMQConstants.WMQ_MESSAGE_BODY_MQ
                 }
-                mqProducer = urMqSession.createProducer(urQueue)
+                urMessageProducer = urSession.createProducer(urQueue)
                 urMqConnection.start()
 
                 val osMqConnection = config.osMqProducerConfig.connect()
-                osMqSession = osMqConnection.createSession(false, Session.AUTO_ACKNOWLEDGE)
-                val osQueue = (osMqSession.createQueue(config.osMqProducerConfig.queue) as MQQueue).apply {
+                osSession = osMqConnection.createSession(false, Session.AUTO_ACKNOWLEDGE)
+                val osQueue = (osSession.createQueue(config.osMqProducerConfig.queue) as MQQueue).apply {
                     targetClient = WMQConstants.WMQ_CLIENT_NONJMS_MQ
                     messageBodyStyle = WMQConstants.WMQ_MESSAGE_BODY_MQ
                 }
-                mqProducer = osMqSession.createProducer(osQueue)
+                osMessageProducer = osSession.createProducer(osQueue)
                 osMqConnection.start()
 
                 true
@@ -52,36 +52,11 @@ class MqProducer(private val config: Configuration) {
                 logger.info("Connected to MQ")
     }
 
-    /*suspend fun send(message: String, forsøkNr: Int = 0) {
-        try {
-            if (!connected) connect()
-            logger.info("Sender melding til MQ.")
-            secureLogger.info("Sender melding til MQ: $message")
-            mqProducer.send(urMqSession.createTextMessage(message))
-            antallMeldingerSendtTilMq.inc()
-            logger.debug("Melding sendt ok til MQ")
-        } catch (ex: Exception) {
-            logger.warn("Feil ved forsøk på å sende melding til MQ: ${ex.message}")
-            antallFeiledeSendForsøkMotMq.inc()
-            connected = false
-            delay(timeMillis = forsinkelseSendtPåNytt)
-            if (forsøkNr < 6) {
-                val nesteForsøk = forsøkNr + 1
-                logger.warn("Forsøker å sende melding til MQ på nytt. Forsøk nr: $nesteForsøk")
-                send(message, nesteForsøk)
-                logger.debug("Melding sendt ok til MQ på forsøk nr: $nesteForsøk")
-            } else {
-                secureLogger.error { "Greide ikke å å sende melding til MQ: $message" }
-                throw RuntimeException("Kunne ikke sende meldingen til MQ.")
-            }
-        }
-    }*/
-
     suspend fun sendTilUr(message: String) {
         if (!connected) connect()
         logger.info("Sender melding til MQ.")
         secureLogger.info("Sender melding til MQ: $message")
-        mqProducer.send(urMqSession.createTextMessage(message))
+        urMessageProducer.send(urSession.createTextMessage(message))
 
     }
 
@@ -89,7 +64,7 @@ class MqProducer(private val config: Configuration) {
         if (!connected) connect()
         logger.info("Sender melding til MQ.")
         secureLogger.info("Sender melding til MQ: $message")
-        mqProducer.send(osMqSession.createTextMessage(message))
+        osMessageProducer.send(osSession.createTextMessage(message))
     }
 }
 
