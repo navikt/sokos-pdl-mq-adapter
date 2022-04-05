@@ -11,10 +11,8 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import mu.KotlinLogging
 import no.nav.sokos.pdladapter.person.config.Configuration
-import no.nav.sokos.pdladapter.person.mqadapter.SECURE_LOGGER_NAME
 
 private val logger = KotlinLogging.logger {}
-private val secureLogger = KotlinLogging.logger(SECURE_LOGGER_NAME)
 private const val timeOutTerskel: Long = 20_000
 
 
@@ -58,16 +56,12 @@ class MqProducer(private val config: Configuration) {
 
     suspend fun sendTilUr(message: String) {
         if (!connected) connect()
-        logger.info("Sender melding til MQ.")
-        secureLogger.info("Sender melding til MQ: $message")
         urMessageProducer.send(urSession.createTextMessage(message))
 
     }
 
     suspend fun sendTilOs(message: String) {
         if (!connected) connect()
-        logger.info("Sender melding til MQ.")
-        secureLogger.info("Sender melding til MQ: $message")
         osMessageProducer.send(osSession.createTextMessage(message))
     }
 
