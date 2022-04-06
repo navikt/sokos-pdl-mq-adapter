@@ -3,7 +3,6 @@ package no.nav.sokos.pdladapter.person.mqadapter
 import kotlin.properties.Delegates
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import mu.KotlinLogging
 import no.nav.sokos.pdladapter.person.config.Configuration
@@ -30,18 +29,19 @@ fun main() {
     appState.running = true
 
     GlobalScope.launch {
-        do try {
+        try {
             val kafkaConsumer: KafkaConsumer<String, String> =
-                KafkaConsumer(appConfig.kafkaConsumerConfig.propMap(useGroupId = true, useSecurity = appConfig.useAuthentication))
+                KafkaConsumer(
+                    appConfig.kafkaConsumerConfig.propMap(useGroupId = true, useSecurity = appConfig.useAuthentication)
+                )
 
             val mqProducer = MqProducer(appConfig)
             logger.info { "Applikasjonen er startet" }
             PdlPersonDokumentRoute(appConfig.kafkaConsumerConfig.topic, kafkaConsumer, mqProducer).listen(appState)
         } catch (ex: Exception) {
-            logger.error("En uventet feil har oppstått, prøver igjen", ex)
-            delay(10000)
+            logger.error("En uventet feil har oppstått", ex)
+            appState.running = false
         }
-        while (appState.running)
     }
 
 
