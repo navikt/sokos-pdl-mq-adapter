@@ -1,4 +1,4 @@
-package no.nav.sokos.pdladapter.person.mqadapter.kafka
+package no.nav.sokos.pdladapter.kafka
 
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -6,8 +6,8 @@ import io.mockk.every
 import io.mockk.mockk
 import java.time.Duration
 import kotlinx.coroutines.runBlocking
-import no.nav.sokos.pdladapter.person.mqadapter.ApplicationState
-import no.nav.sokos.pdladapter.person.mqadapter.mq.MqProducer
+import no.nav.sokos.pdladapter.ApplicationState
+import no.nav.sokos.pdladapter.mq.MqProducer
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.kafka.clients.consumer.ConsumerRecords
 import org.apache.kafka.clients.consumer.KafkaConsumer

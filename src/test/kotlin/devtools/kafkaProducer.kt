@@ -2,8 +2,8 @@ package devtools
 
 
 import java.io.File
-import no.nav.sokos.pdladapter.person.config.Configuration
-import no.nav.sokos.pdladapter.person.config.propMap
+import no.nav.sokos.pdladapter.config.Configuration
+import no.nav.sokos.pdladapter.config.propMap
 import org.apache.kafka.clients.producer.KafkaProducer
 import org.apache.kafka.clients.producer.ProducerRecord
 

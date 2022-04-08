@@ -1,4 +1,4 @@
-package no.nav.sokos.pdladapter.person.config
+package no.nav.sokos.pdladapter.config
 
 import mu.KotlinLogging
 

@@ -1,4 +1,4 @@
-package no.nav.sokos.pdladapter.person.mqadapter.mq
+package no.nav.sokos.pdladapter.mq
 
 import com.ibm.mq.jms.MQConnectionFactory
 import com.ibm.mq.jms.MQQueue
@@ -10,7 +10,7 @@ import javax.jms.Session
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import mu.KotlinLogging
-import no.nav.sokos.pdladapter.person.config.Configuration
+import no.nav.sokos.pdladapter.config.Configuration
 
 private val logger = KotlinLogging.logger {}
 private const val timeOutTerskel: Long = 20_000

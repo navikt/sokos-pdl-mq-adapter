@@ -1,14 +1,14 @@
-package no.nav.sokos.pdladapter.person.mqadapter.kafka
+package no.nav.sokos.pdladapter.kafka
 
 import java.time.Duration
 import java.util.*
 import kotlinx.coroutines.time.delay
 import mu.KotlinLogging
-import no.nav.sokos.pdladapter.person.mqadapter.ApplicationState
-import no.nav.sokos.pdladapter.person.mqadapter.SECURE_LOGGER_NAME
-import no.nav.sokos.pdladapter.person.mqadapter.X_CORRELATION_ID
-import no.nav.sokos.pdladapter.person.mqadapter.metrics.Metrics
-import no.nav.sokos.pdladapter.person.mqadapter.mq.MqProducer
+import no.nav.sokos.pdladapter.ApplicationState
+import no.nav.sokos.pdladapter.SECURE_LOGGER_NAME
+import no.nav.sokos.pdladapter.X_CORRELATION_ID
+import no.nav.sokos.pdladapter.metrics.Metrics
+import no.nav.sokos.pdladapter.mq.MqProducer
 import no.nav.sokos.pdladapter.retry
 import org.apache.kafka.clients.consumer.ConsumerRecords
 import org.apache.kafka.clients.consumer.KafkaConsumer

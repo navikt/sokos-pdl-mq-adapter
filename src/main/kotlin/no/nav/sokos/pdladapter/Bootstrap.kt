@@ -1,15 +1,15 @@
-package no.nav.sokos.pdladapter.person.mqadapter
+package no.nav.sokos.pdladapter
 
 import kotlin.properties.Delegates
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import mu.KotlinLogging
-import no.nav.sokos.pdladapter.person.config.Configuration
-import no.nav.sokos.pdladapter.person.config.propMap
-import no.nav.sokos.pdladapter.person.mqadapter.kafka.PdlPersonDokumentRoute
-import no.nav.sokos.pdladapter.person.mqadapter.metrics.Metrics
-import no.nav.sokos.pdladapter.person.mqadapter.mq.MqProducer
+import no.nav.sokos.pdladapter.config.Configuration
+import no.nav.sokos.pdladapter.config.propMap
+import no.nav.sokos.pdladapter.kafka.PdlPersonDokumentRoute
+import no.nav.sokos.pdladapter.metrics.Metrics
+import no.nav.sokos.pdladapter.mq.MqProducer
 import org.apache.kafka.clients.consumer.KafkaConsumer
 
 private val logger = KotlinLogging.logger {}

@@ -1,4 +1,4 @@
-package no.nav.sokos.pdladapter.person.mqadapter.plugins
+package no.nav.sokos.pdladapter.plugins
 
 import com.fasterxml.jackson.databind.SerializationFeature
 import io.ktor.application.Application

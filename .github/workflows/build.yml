@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE: ghcr.io/${{ github.repository }}/sokos-pdl-person-mq-adapter:${{ github.sha }}
+  IMAGE: ghcr.io/${{ github.repository }}/sokos-pdl-mq-adapter:${{ github.sha }}
 
 jobs:
   build:

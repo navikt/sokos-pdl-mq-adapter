@@ -1,4 +1,4 @@
-package no.nav.sokos.pdladapter.person.mqadapter
+package no.nav.sokos.pdladapter
 
 import java.io.Closeable
 import kotlinx.coroutines.coroutineScope
