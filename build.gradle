@@ -1,5 +1,5 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.6.10'
+    id 'org.jetbrains.kotlin.jvm' version '1.6.20'
     id 'org.betterplugin.avro' version '0.19.2-SNAPSHOT'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'org.jsonschema2dataclass' version '4.2.0'
@@ -15,7 +15,22 @@ repositories {
     }
 }
 
+final def ktor_version = '1.6.8'
+final def kotlin_version='1.6.20'
+final def logback_version='1.2.11'
+final def logstash_version='7.0.1'
+final def prometheus_version= '1.8.4'
+final def kafkaClientVersion='3.1.0'
+final def avroVersion='1.11.0'
+final def kafkaAvroSerializerVersion='6.2.0'
+final def kotlin_logging_version='2.1.21'
+final def mq_version='9.2.5.0'
+final def junit_version='5.8.2'
+final def mockk_version = '1.12.3'
+
+
 dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "io.ktor:ktor-server-core:$ktor_version"
     implementation "io.ktor:ktor-metrics:$ktor_version"
     implementation "io.ktor:ktor-jackson:$ktor_version"
@@ -26,24 +41,15 @@ dependencies {
     implementation "net.logstash.logback:logstash-logback-encoder:$logstash_version"
     implementation "io.ktor:ktor-metrics-micrometer:$ktor_version"
     implementation "io.micrometer:micrometer-registry-prometheus:$prometheus_version"
-
     implementation "org.apache.kafka:kafka-clients:$kafkaClientVersion"
     implementation "org.apache.avro:avro:$avroVersion"
     implementation "io.confluent:kafka-avro-serializer:$kafkaAvroSerializerVersion"
-    // https://mvnrepository.com/artifact/com.google.code.gson/gson
-    implementation("com.google.code.gson:gson:2.9.0")
-
-
     implementation "io.github.microutils:kotlin-logging-jvm:$kotlin_logging_version"
-
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-slf4j:1.6.0"
-
 
     testImplementation "io.ktor:ktor-server-tests:$ktor_version"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
     testImplementation "org.junit.jupiter:junit-jupiter:$junit_version"
-    testImplementation 'io.mockk:mockk:1.12.3'
+    testImplementation "io.mockk:mockk:$mockk_version"
 }
 
 compileKotlin {
