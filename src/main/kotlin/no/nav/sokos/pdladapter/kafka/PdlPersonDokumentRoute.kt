@@ -1,18 +1,17 @@
 package no.nav.sokos.pdladapter.kafka
 
-import java.time.Duration
-import java.util.*
 import kotlinx.coroutines.time.delay
 import mu.KotlinLogging
 import no.nav.sokos.pdladapter.ApplicationState
 import no.nav.sokos.pdladapter.SECURE_LOGGER_NAME
-import no.nav.sokos.pdladapter.X_CORRELATION_ID
 import no.nav.sokos.pdladapter.metrics.Metrics
 import no.nav.sokos.pdladapter.mq.MqProducer
 import no.nav.sokos.pdladapter.retry
 import org.apache.kafka.clients.consumer.ConsumerRecords
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import org.slf4j.MDC
+import java.time.Duration
+import java.util.*
 
 private val logger = KotlinLogging.logger {}
 private val secureLogger = KotlinLogging.logger(SECURE_LOGGER_NAME)
@@ -32,7 +31,7 @@ class PdlPersonDokumentRoute(
                     logger.info("Mottatt ${consumerRecords.count()} meldinger fra Kafka person")
                     consumerRecords
                         .forEach { record ->
-                            MDC.put(X_CORRELATION_ID, UUID.randomUUID().toString())
+                            MDC.put("x-correlation-id", UUID.randomUUID().toString())
                             Metrics.antallMeldingerMottattFraKafka.inc()
                             logger.info("Record mottatt med offset = ${record.offset()}, partisjon = ${record.partition()}, topic = ${record.topic()}")
                             secureLogger.info("Record: key = ${record.key()}, value = ${record.value()}")

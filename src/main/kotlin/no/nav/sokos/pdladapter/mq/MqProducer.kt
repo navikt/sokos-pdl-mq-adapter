@@ -4,17 +4,13 @@ import com.ibm.mq.jms.MQConnectionFactory
 import com.ibm.mq.jms.MQQueue
 import com.ibm.msg.client.jms.JmsConstants
 import com.ibm.msg.client.wmq.WMQConstants
+import mu.KotlinLogging
+import no.nav.sokos.pdladapter.config.Configuration
 import javax.jms.Connection
 import javax.jms.MessageProducer
 import javax.jms.Session
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withTimeout
-import mu.KotlinLogging
-import no.nav.sokos.pdladapter.config.Configuration
 
 private val logger = KotlinLogging.logger {}
-private const val timeOutTerskel: Long = 20_000
-
 
 class MqProducer(private val config: Configuration) {
     private lateinit var urSession: Session
@@ -24,22 +20,20 @@ class MqProducer(private val config: Configuration) {
     private var connected: Boolean = false
 
     init {
-        runBlocking { connect() }  //TODO Undersøke om det er en riktigere måte å gjøre dette på
+        connect()
     }
 
-    private suspend fun connect() {
+    private fun connect() {
         logger.info("Kobler til MQ")
-        connected = withTimeout(timeOutTerskel) {
-            val urOppsett = initialiserMq(config.urMqProducerConfig.connect(), config.urMqProducerConfig.queue)
-            urMessageProducer = urOppsett.first
-            urSession = urOppsett.second
+        val urOppsett = initialiserMq(config.urMqProducerConfig.connect(), config.urMqProducerConfig.queue)
+        urMessageProducer = urOppsett.first
+        urSession = urOppsett.second
 
-            val osOppsett = initialiserMq(config.osMqProducerConfig.connect(), config.osMqProducerConfig.queue)
-            osMessageProducer = osOppsett.first
-            osSession = osOppsett.second
+        val osOppsett = initialiserMq(config.osMqProducerConfig.connect(), config.osMqProducerConfig.queue)
+        osMessageProducer = osOppsett.first
+        osSession = osOppsett.second
 
-            true
-        }
+        connected = true
     }
 
     private fun initialiserMq(connection: Connection, queueNavn: String): Pair<MessageProducer, Session> {
@@ -54,15 +48,25 @@ class MqProducer(private val config: Configuration) {
         return Pair(messageProducer, session)
     }
 
-    suspend fun sendTilUr(message: String) {
-        if (!connected) connect()
-        urMessageProducer.send(urSession.createTextMessage(message))
+    fun sendTilUr(message: String) {
+        try {
+            if (!connected) connect()
+            urMessageProducer.send(urSession.createTextMessage(message))
+        } catch (ex: Exception) {
+            connected = false
+            throw ex
+        }
 
     }
 
-    suspend fun sendTilOs(message: String) {
-        if (!connected) connect()
-        osMessageProducer.send(osSession.createTextMessage(message))
+    fun sendTilOs(message: String) {
+        try {
+            if (!connected) connect()
+            osMessageProducer.send(osSession.createTextMessage(message))
+        } catch (ex: Exception) {
+            connected = false
+            throw ex
+        }
     }
 
     private fun Configuration.MqProducerConfig.connect(): Connection = MQConnectionFactory().also {
