@@ -14,7 +14,7 @@ class HttpServer(
 ) {
     private val embeddedServer = embeddedServer(Netty, port) {
         installMetrics()
-        naisApi({ appState.initialized }, { appState.running })
+        naisApi(alive = { appState.alive }, ready = { appState.ready })
         configureSerialization()
     }
 

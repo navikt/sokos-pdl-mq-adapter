@@ -45,7 +45,7 @@ class PdlPersonDokumentRoute(
                 } else {
                     delay(Duration.ofMillis(500))
                 }
-            } while (appState.running)
+            } while (appState.alive)
         }
     }
 

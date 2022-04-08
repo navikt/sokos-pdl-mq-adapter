@@ -26,7 +26,7 @@ fun main() {
 
     httpServer.start()
 
-    appState.running = true
+    appState.alive = true
 
     GlobalScope.launch {
         try {
@@ -40,13 +40,13 @@ fun main() {
             PdlPersonDokumentRoute(appConfig.kafkaConsumerConfig.topic, kafkaConsumer, mqProducer).listen(appState)
         } catch (ex: Exception) {
             logger.error("En uventet feil har oppstått", ex)
-            appState.running = false
+            appState.alive = false
         }
     }
 
 
     Runtime.getRuntime().addShutdownHook(Thread {
-        appState.running = false
+        appState.alive = false
         httpServer.stop()
     })
 }
@@ -55,10 +55,10 @@ class ApplicationState(
     defaultInitialized: Boolean = true,
     defaultRunning: Boolean = false
 ) {
-    var initialized: Boolean by Delegates.observable(defaultInitialized) { _, _, newValue ->
+    var ready: Boolean by Delegates.observable(defaultInitialized) { _, _, newValue ->
         if (!newValue) Metrics.appStateReadyFalse.inc()
     }
-    var running: Boolean by Delegates.observable(defaultRunning) { _, _, newValue ->
-        if (!newValue) Metrics.appStateRunningFalse.inc()
+    var alive: Boolean by Delegates.observable(defaultRunning) { _, _, newValue ->
+        if (!newValue) Metrics.appStateAliveFalse.inc()
     }
 }

@@ -25,7 +25,7 @@ object Metrics {
 
     val prometheusRegistry = PrometheusMeterRegistry(PrometheusConfig.DEFAULT)
 
-    val appStateRunningFalse: Counter = Counter.build()
+    val appStateAliveFalse: Counter = Counter.build()
         .namespace(NAMESPACE)
         .name("app_state_running_false")
         .help("app state running changed to false")
