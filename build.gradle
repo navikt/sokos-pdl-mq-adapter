@@ -61,7 +61,7 @@ test {
 shadowJar {
     archiveBaseName.set("app")
     manifest {
-        attributes "Main-Class": "no.nav.sokos.pdladapter.person.mqadapter.BootstrapKt"
+        attributes "Main-Class": "no.nav.sokos.pdladapter.BootstrapKt"
     }
 }
 

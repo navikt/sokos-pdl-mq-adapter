@@ -71,4 +71,4 @@ spec:
     - name: OS_MQ_CHANNEL
       value: Q1_SOKOS_PDL_PERSON
   envFrom:
-    - secret: sokos-pdl-person-mq-adapter-secrets
+    - secret: sokos-pdl-mq-adapter-secrets
