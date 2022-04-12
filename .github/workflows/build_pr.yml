@@ -8,7 +8,7 @@ permissions: write-all
 
 env:
   COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
-  DOCKER_IMAGE: ghcr.io/${{ github.repository }}/sokos-pdl-mq-adapter:${{ COMMIT_SHA }}
+  DOCKER_IMAGE: ghcr.io/${{ github.repository }}/sokos-pdl-mq-adapter:$COMMIT_SHA
 
 jobs:
   build:
