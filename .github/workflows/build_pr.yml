@@ -8,7 +8,7 @@ permissions: write-all
 
 env:
   COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
-  DOCKER_IMAGE: ghcr.io/${{ github.repository }}/sokos-pdl-mq-adapter:${{ COMMIT_SHA }}
+  DOCKER_IMAGE: ghcr.io/${{ github.repository }}/sokos-pdl-mq-adapter:${COMMIT_SHA}
 
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
       - name: Sjekker ut
         uses: actions/checkout@v3
         with:
-          ref: ${{ COMMIT_SHA }}
+          ref: ${COMMIT_SHA}
       - name: Setter opp java
         uses: actions/setup-java@v1
         with:
@@ -43,7 +43,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: ${{ COMMIT_SHA }}
+          ref: ${COMMIT_SHA}
       - uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
