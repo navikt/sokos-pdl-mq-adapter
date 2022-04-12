@@ -49,3 +49,4 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: .nais/naiserator-preprod.yaml
+          VAR: image=${{ env.DOCKER_IMAGE }}
