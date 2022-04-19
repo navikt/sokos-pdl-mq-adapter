@@ -3,7 +3,6 @@ package no.nav.sokos.pdladapter.config
 import io.confluent.kafka.schemaregistry.client.SchemaRegistryClientConfig.BASIC_AUTH_CREDENTIALS_SOURCE
 import io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG
 import io.confluent.kafka.serializers.KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG
-import java.util.*
 import org.apache.kafka.clients.CommonClientConfigs
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.clients.consumer.ConsumerConfig.AUTO_OFFSET_RESET_CONFIG
@@ -18,6 +17,7 @@ import org.apache.kafka.clients.producer.ProducerConfig.VALUE_SERIALIZER_CLASS_C
 import org.apache.kafka.common.config.SaslConfigs
 import org.apache.kafka.common.serialization.StringDeserializer
 import org.apache.kafka.common.serialization.StringSerializer
+import java.util.*
 
 fun Configuration.KafkaConsumerConfig.propMap(useGroupId: Boolean, useSecurity: Boolean) = Properties().apply {
     if (useGroupId) {
@@ -32,7 +32,7 @@ fun Configuration.KafkaConsumerConfig.propMap(useGroupId: Boolean, useSecurity: 
     put(MAX_POLL_RECORDS_CONFIG, "1")
     put(MAX_POLL_INTERVAL_MS_CONFIG, "200000")
     put(ENABLE_AUTO_COMMIT_CONFIG, "false")
-    put(AUTO_OFFSET_RESET_CONFIG, "none") //TODO Implementere støtte for å håndtere at man mister offset for topic
+    put(AUTO_OFFSET_RESET_CONFIG, "latest") //TODO Implementere støtte for å håndtere at man mister offset for topic
     put(SPECIFIC_AVRO_READER_CONFIG, true)
     put(SCHEMA_REGISTRY_URL_CONFIG, schemaRegistryUrl)
     put(BASIC_AUTH_CREDENTIALS_SOURCE, "USER_INFO")

@@ -48,7 +48,7 @@ spec:
     - name: KAFKA_CONSUMER_TOPIC
       value: aapen-person-pdl-dokument-v1
     - name: KAFKA_CONSUMER_GROUP_ID
-      value: pdl-person-mq-adapter-group-id
+      value: sokos-pdl-mq-adapter-group-id
 #      variabler for mq
     - name: UR_MQ_PRODUCER_QUEUE
       value: QA.Q1_230.OB01_PDLDATA
