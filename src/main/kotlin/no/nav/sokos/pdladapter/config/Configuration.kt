@@ -34,7 +34,7 @@ data class Configuration(
         val groupId: String = readProperty("KAFKA_CONSUMER_GROUP_ID"),
         val topic: String = readProperty("KAFKA_CONSUMER_TOPIC"),
         val username: String = readProperty("KAFKA_CONSUMER_USERNAME"),
-        val password: String = "falskpassord",//readProperty("KAFKA_CONSUMER_PASSWORD"),
+        val password: String = readProperty("KAFKA_CONSUMER_PASSWORD"),
         val schemaRegistryUrl: String = readProperty("KAFKA_SCHEMA_REGISTRY"),
     )
 
