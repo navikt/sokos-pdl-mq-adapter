@@ -28,7 +28,6 @@ class PdlPersonDokumentRoute(
             do {
                 val consumerRecords: ConsumerRecords<String, String> = kafkaConsumer.poll(Duration.ofMillis(0))
                 if (!consumerRecords.isEmpty) {
-                    logger.info("Mottatt ${consumerRecords.count()} meldinger fra Kafka person")
                     consumerRecords
                         .forEach { record ->
                             MDC.put("x-correlation-id", UUID.randomUUID().toString())

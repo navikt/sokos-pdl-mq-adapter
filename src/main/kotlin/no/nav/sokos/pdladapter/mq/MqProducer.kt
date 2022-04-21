@@ -52,6 +52,7 @@ class MqProducer(private val config: Configuration) {
         try {
             if (!connected) connect()
             urMessageProducer.send(urSession.createTextMessage(message))
+            logger.info("Melding sendt til UR-kø")
         } catch (ex: Exception) {
             connected = false
             throw ex
@@ -63,6 +64,7 @@ class MqProducer(private val config: Configuration) {
         try {
             if (!connected) connect()
             osMessageProducer.send(osSession.createTextMessage(message))
+            logger.info("Melding sendt til OS-kø")
         } catch (ex: Exception) {
             connected = false
             throw ex

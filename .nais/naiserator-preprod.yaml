@@ -14,8 +14,6 @@ spec:
     cpuThresholdPercentage: 90
   secureLogs:
     enabled: true
-  kafka:
-    pool: nav-dev
   gcp:
   resources:
     limits:
