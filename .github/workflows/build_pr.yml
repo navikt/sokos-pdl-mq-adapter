@@ -2,13 +2,9 @@ name: PR build and deploy
 
 on:
   pull_request:
-  workflow_dispatch:
-
-permissions: write-all
 
 env:
   COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
-  DOCKER_IMAGE: ghcr.io/${{ github.repository }}/sokos-pdl-mq-adapter:${{ github.event.pull_request.head.sha }}
 
 jobs:
   build:
@@ -28,25 +24,3 @@ jobs:
         env:
           ORG_GRADLE_PROJECT_githubUser: x-access-token
           ORG_GRADLE_PROJECT_githubPassword: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and publish Docker image
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          docker build --tag ${DOCKER_IMAGE} .
-          docker login ghcr.io -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
-          docker push ${DOCKER_IMAGE}
-
-  deploy-dev-gcp:
-    name: Deploy to dev-gcp
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: ${{env.COMMIT_SHA}}
-      - uses: nais/deploy/actions/deploy@v1
-        env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: dev-gcp
-          RESOURCE: .nais/naiserator-preprod.yaml
-          VAR: image=${{ env.DOCKER_IMAGE }}
