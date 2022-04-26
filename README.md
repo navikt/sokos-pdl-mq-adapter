@@ -38,4 +38,3 @@ Det finnes en kafka produser i test pakken devtools som produserer identhendelse
 For å kjøre applikasjonen lokalt trengs en IBM mq server den kan snakke med
 
 GUI er da tilgjengelig på https://0.0.0.0:9443/ibmmq/console/ med brukernav admin og passord passw0rd
-
