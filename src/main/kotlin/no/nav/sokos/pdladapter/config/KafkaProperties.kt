@@ -32,7 +32,7 @@ fun Configuration.KafkaConsumerConfig.propMap(useGroupId: Boolean, useSecurity: 
     put(MAX_POLL_RECORDS_CONFIG, "1")
     put(MAX_POLL_INTERVAL_MS_CONFIG, "200000")
     put(ENABLE_AUTO_COMMIT_CONFIG, "false")
-    put(AUTO_OFFSET_RESET_CONFIG, "none") //TODO Implementere støtte for å håndtere at man mister offset for topic
+    put(AUTO_OFFSET_RESET_CONFIG, "latest") //TODO Implementere støtte for å håndtere at man mister offset for topic
     put(SPECIFIC_AVRO_READER_CONFIG, true)
     put(SCHEMA_REGISTRY_URL_CONFIG, schemaRegistryUrl)
     put(BASIC_AUTH_CREDENTIALS_SOURCE, "USER_INFO")

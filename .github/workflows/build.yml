@@ -35,7 +35,7 @@ jobs:
   deploy-dev-gcp:
     name: Deploy to dev-gcp
     needs: build
-    if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -43,4 +43,17 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
-          RESOURCE: .nais/naiserator-preprod.yaml
+          RESOURCE: .nais/naiserator-dev.yaml
+
+  deploy-prod-gcp:
+    name: Deploy to prod-gcp
+    needs: deploy-dev-gcp
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: prod-gcp
+          RESOURCE: .nais/naiserator-prod.yaml

@@ -1,0 +1,26 @@
+apiVersion: "nais.io/v1"
+kind: "Alert"
+metadata:
+  name: sokos-pdl-mq-adapter
+  namespace: okonomi
+  labels:
+    team: okonomi
+spec:
+  receivers:
+    slack:
+      channel: '#okonomi-alerts-prod'
+      prependText: ''
+  alerts:
+    - alert: applikasjon nede
+      expr: up{app="sokos-pdl-mq-adapter", job="kubernetes-pods", kubernetes_namespace="okonomi"} == 0
+      for: 2m
+      description: "App {{ $labels.app }} er nede i namespace {{ $labels.kubernetes_namespace }}"
+      action: "`kubectl describe pod {{ $labels.kubernetes_pod_name }} -n {{ $labels.kubernetes_namespace }}` for events, og `kubectl logs {{ $labels.kubernetes_pod_name }} -n {{ $labels.kubernetes_namespace }}` for logger"
+    - alert: høy feilrate i logger
+      expr: (100 * sum by (log_app, log_namespace) (rate(logd_messages_total{log_app="sokos-pdl-mq-adapter",log_namespace="okonomi",log_level=~"Warning|Error"}[3m])) / sum by (log_app, log_namespace) (rate(logd_messages_total{log_app="sokos-pdl-mq-adapter",log_namespace="okonomi"}[3m]))) > 10
+      for: 3m
+      action: "Sjekk loggene til app {{ $labels.log_app }} i namespace {{ $labels.log_namespace }}, for å se hvorfor det er så mye feil"
+    - alert: fant error i loggene
+      expr: (100 * sum by (log_app, log_namespace) (rate(logd_messages_total{log_app="sokos-pdl-mq-adapter",log_namespace="okonomi",log_level=~"Error"}[3m])) / sum by (log_app, log_namespace) (rate(logd_messages_total{log_app="sokos-pdl-mq-adapter",log_namespace="okonomi"}[3m]))) > 0
+      for: 3m
+      action: "Sjekk loggene til app {{ $labels.log_app }} i namespace {{ $labels.log_namespace }}, og se om dette er noe vi bør ta stilling til"

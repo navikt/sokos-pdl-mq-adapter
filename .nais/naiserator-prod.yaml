@@ -1,0 +1,72 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: sokos-pdl-mq-adapter
+  namespace: okonomi
+  labels:
+    team: okonomi
+spec:
+  image: {{image}}
+  port: 8080
+  replicas:
+    min: 1
+    max: 1
+    cpuThresholdPercentage: 90
+  secureLogs:
+    enabled: true
+  gcp:
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 4Gi
+    requests:
+      cpu: 500m
+      memory: 512Mi
+  liveness:
+    path: /internal/is_alive
+    initialDelay: 30
+    timeout: 5
+    periodSeconds: 5
+    failureThreshold: 30
+  readiness:
+    path: /internal/is_ready
+    initialDelay: 60
+    periodSeconds: 5
+    timeout: 5
+  prometheus:
+    enabled: true
+    path: /metrics
+  ingresses:
+    - https://sokos-pdl-mq-adapter.intern.nav.no
+  env:
+    - name: ON_PREM_KAFKA_BROKERS
+      value: a01apvl00145.adeo.no:8443,a01apvl00146.adeo.no:8443,a01apvl00147.adeo.no:8443,a01apvl00148.adeo.no:8443,a01apvl00149.adeo.no:8443,a01apvl00150.adeo.no:8443
+    - name: KAFKA_SCHEMA_REGISTRY
+      value: https://kafka-schema-registry.nais.adeo.no
+    - name: KAFKA_CONSUMER_TOPIC
+      value: aapen-person-pdl-dokument-v1
+    - name: KAFKA_CONSUMER_GROUP_ID
+      value: sokos-pdl-mq-adapter-group-id
+#      variabler for mq
+    - name: UR_MQ_PRODUCER_QUEUE
+      value: QA.P230.OB01_PDLDATA
+    - name: UR_MQ_HOST
+      value: a01apvl247.adeo.no
+    - name: UR_MQ_PORT
+      value: "1414"
+    - name: UR_MQ_QUEUE_MANAGER_NAME
+      value: MPLS01
+    - name: UR_MQ_CHANNEL
+      value: P_SOKOS_PDL_PERSON
+    - name: OS_MQ_PRODUCER_QUEUE
+      value: QA.P231.OB04_PDLDATA
+    - name: OS_MQ_HOST
+      value: a01apvl247.adeo.no
+    - name: OS_MQ_PORT
+      value: "1414"
+    - name: OS_MQ_QUEUE_MANAGER_NAME
+      value: MPLS01
+    - name: OS_MQ_CHANNEL
+      value: P_SOKOS_PDL_PERSON
+  envFrom:
+    - secret: sokos-pdl-mq-adapter-secrets
