@@ -15,7 +15,7 @@ repositories {
     }
 }
 
-final def ktor_version = '1.6.8'
+final def ktor_version = '2.0.0'
 final def kotlin_version = '1.6.21'
 final def logback_version = '1.2.11'
 final def logstash_version = '7.1.1'
@@ -32,14 +32,15 @@ final def mockk_version = '1.12.3'
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "io.ktor:ktor-server-core:$ktor_version"
-    implementation "io.ktor:ktor-metrics:$ktor_version"
-    implementation "io.ktor:ktor-jackson:$ktor_version"
+    implementation "io.ktor:ktor-server-call-logging:$ktor_version"
+    implementation "io.ktor:ktor-server-content-negotiation:$ktor_version"
+    implementation "io.ktor:ktor-serialization-jackson:$ktor_version"
+    implementation "io.ktor:ktor-server-metrics-micrometer:$ktor_version"
     implementation "io.ktor:ktor-server-netty:$ktor_version"
     implementation "com.ibm.mq:com.ibm.mq.allclient:$mq_version"
     implementation "ch.qos.logback:logback-core:$logback_version"
     implementation "ch.qos.logback:logback-classic:$logback_version"
     implementation "net.logstash.logback:logstash-logback-encoder:$logstash_version"
-    implementation "io.ktor:ktor-metrics-micrometer:$ktor_version"
     implementation "io.micrometer:micrometer-registry-prometheus:$prometheus_version"
     implementation "org.apache.kafka:kafka-clients:$kafkaClientVersion"
     implementation "org.apache.avro:avro:$avroVersion"
