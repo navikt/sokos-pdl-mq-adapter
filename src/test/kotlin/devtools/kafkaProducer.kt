@@ -1,14 +1,25 @@
 package devtools
 
 
-import java.io.File
+import io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG
 import no.nav.sokos.pdladapter.config.Configuration
-import no.nav.sokos.pdladapter.config.propMap
+import org.apache.kafka.clients.CommonClientConfigs
 import org.apache.kafka.clients.producer.KafkaProducer
+import org.apache.kafka.clients.producer.ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG
+import org.apache.kafka.clients.producer.ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG
 import org.apache.kafka.clients.producer.ProducerRecord
+import org.apache.kafka.common.serialization.StringSerializer
+import java.io.File
+import java.util.*
 
 val appConfig: Configuration = Configuration()
-val kafkaProducer: KafkaProducer<String, String> = KafkaProducer(appConfig.kafkaConsumerConfig.propMap(false, false))
+val kafkaProducerProperties =  Properties().apply {
+    put(KEY_SERIALIZER_CLASS_CONFIG, StringSerializer::class.java.name)
+    put(VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer::class.java.name)
+    put(CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG, appConfig.kafkaConsumerConfig.onPremBrokers)
+    put(SCHEMA_REGISTRY_URL_CONFIG, appConfig.kafkaConsumerConfig.schemaRegistryUrl)
+}
+val kafkaProducer: KafkaProducer<String, String> = KafkaProducer(kafkaProducerProperties)
 
 fun main() {
     val jsonString: String = File("src/test/resources/kafka_response.json").readText(Charsets.UTF_8)

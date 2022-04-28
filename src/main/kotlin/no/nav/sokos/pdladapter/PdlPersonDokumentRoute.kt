@@ -1,12 +1,9 @@
-package no.nav.sokos.pdladapter.kafka
+package no.nav.sokos.pdladapter
 
 import kotlinx.coroutines.time.delay
 import mu.KotlinLogging
-import no.nav.sokos.pdladapter.ApplicationState
-import no.nav.sokos.pdladapter.SECURE_LOGGER_NAME
 import no.nav.sokos.pdladapter.metrics.Metrics
 import no.nav.sokos.pdladapter.mq.MqProducer
-import no.nav.sokos.pdladapter.retry
 import org.apache.kafka.clients.consumer.ConsumerRecords
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import org.slf4j.MDC

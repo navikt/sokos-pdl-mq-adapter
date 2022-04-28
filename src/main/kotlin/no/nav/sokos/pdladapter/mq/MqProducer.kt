@@ -6,6 +6,7 @@ import com.ibm.msg.client.jms.JmsConstants
 import com.ibm.msg.client.wmq.WMQConstants
 import mu.KotlinLogging
 import no.nav.sokos.pdladapter.config.Configuration
+import no.nav.sokos.pdladapter.config.MqProducerConfig
 import javax.jms.Connection
 import javax.jms.MessageProducer
 import javax.jms.Session
@@ -20,10 +21,10 @@ class MqProducer(private val config: Configuration) {
     private var connected: Boolean = false
 
     init {
-        connect()
+        kobleTilMq()
     }
 
-    private fun connect() {
+    private fun kobleTilMq() {
         logger.info("Kobler til MQ")
         val urOppsett = initialiserMq(config.urMqProducerConfig.connect(), config.urMqProducerConfig.queue)
         urMessageProducer = urOppsett.first
@@ -50,7 +51,7 @@ class MqProducer(private val config: Configuration) {
 
     fun sendTilUr(message: String) {
         try {
-            if (!connected) connect()
+            if (!connected) kobleTilMq()
             urMessageProducer.send(urSession.createTextMessage(message))
             logger.info("Melding sendt til UR-kø")
         } catch (ex: Exception) {
@@ -62,7 +63,7 @@ class MqProducer(private val config: Configuration) {
 
     fun sendTilOs(message: String) {
         try {
-            if (!connected) connect()
+            if (!connected) kobleTilMq()
             osMessageProducer.send(osSession.createTextMessage(message))
             logger.info("Melding sendt til OS-kø")
         } catch (ex: Exception) {
@@ -71,7 +72,7 @@ class MqProducer(private val config: Configuration) {
         }
     }
 
-    private fun Configuration.MqProducerConfig.connect(): Connection = MQConnectionFactory().also {
+    private fun MqProducerConfig.connect(): Connection = MQConnectionFactory().also {
         it.transportType = WMQConstants.WMQ_CM_CLIENT
         it.hostName = host
         it.port = port.toInt()
@@ -79,8 +80,7 @@ class MqProducer(private val config: Configuration) {
         it.queueManager = name
         it.targetClientMatching = true
         it.setBooleanProperty(JmsConstants.USER_AUTHENTICATION_MQCSP, true)
-    }
-        .createConnection(username, password)
+    }.createConnection(username, password)
 
 }
 

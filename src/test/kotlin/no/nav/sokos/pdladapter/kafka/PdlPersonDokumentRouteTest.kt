@@ -6,6 +6,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import no.nav.sokos.pdladapter.ApplicationState
+import no.nav.sokos.pdladapter.PdlPersonDokumentRoute
 import no.nav.sokos.pdladapter.mq.MqProducer
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.kafka.clients.consumer.ConsumerRecords
