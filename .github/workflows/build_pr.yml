@@ -14,7 +14,7 @@ jobs:
       - name: Sjekker ut
         uses: actions/checkout@v3
         with:
-          ref: ${{env.COMMIT_SHA}}Build and push Docker container
+          ref: ${{env.COMMIT_SHA}}
       - name: Setter opp java
         uses: actions/setup-java@v1
         with:
