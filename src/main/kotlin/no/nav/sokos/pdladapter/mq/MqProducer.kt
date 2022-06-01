@@ -4,11 +4,11 @@ import com.ibm.mq.jms.MQConnectionFactory
 import com.ibm.mq.jms.MQQueue
 import com.ibm.msg.client.jms.JmsConstants
 import com.ibm.msg.client.wmq.WMQConstants
-import mu.KotlinLogging
-import no.nav.sokos.pdladapter.config.Configuration
 import javax.jms.Connection
 import javax.jms.MessageProducer
 import javax.jms.Session
+import mu.KotlinLogging
+import no.nav.sokos.pdladapter.config.Configuration
 
 private val logger = KotlinLogging.logger {}
 
@@ -51,7 +51,8 @@ class MqProducer(private val config: Configuration) {
     fun sendTilUr(message: String) {
         try {
             if (!connected) connect()
-            urMessageProducer.send(urSession.createTextMessage(message))
+            //TODO Sender ikke til MQ som avtalt i møte 01.06.2022
+            //urMessageProducer.send(urSession.createTextMessage(message))
             logger.info("Melding sendt til UR-kø")
         } catch (ex: Exception) {
             connected = false
@@ -63,7 +64,8 @@ class MqProducer(private val config: Configuration) {
     fun sendTilOs(message: String) {
         try {
             if (!connected) connect()
-            osMessageProducer.send(osSession.createTextMessage(message))
+            //TODO Sender ikke til MQ som avtalt i møte 01.06.2022
+            //osMessageProducer.send(osSession.createTextMessage(message))
             logger.info("Melding sendt til OS-kø")
         } catch (ex: Exception) {
             connected = false
