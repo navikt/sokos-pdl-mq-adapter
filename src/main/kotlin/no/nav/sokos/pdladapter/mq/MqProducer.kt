@@ -53,7 +53,7 @@ class MqProducer(private val config: Configuration) {
             if (!connected) connect()
             //TODO Sender ikke til MQ som avtalt i møte 01.06.2022
             //urMessageProducer.send(urSession.createTextMessage(message))
-            logger.info("Melding sendt til UR-kø")
+            //logger.info("Melding sendt til UR-kø")
         } catch (ex: Exception) {
             connected = false
             throw ex
@@ -66,7 +66,7 @@ class MqProducer(private val config: Configuration) {
             if (!connected) connect()
             //TODO Sender ikke til MQ som avtalt i møte 01.06.2022
             //osMessageProducer.send(osSession.createTextMessage(message))
-            logger.info("Melding sendt til OS-kø")
+            //logger.info("Melding sendt til OS-kø")
         } catch (ex: Exception) {
             connected = false
             throw ex
