@@ -1,16 +1,14 @@
 package no.nav.sokos.pdladapter
 
-import kotlin.properties.Delegates
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import mu.KotlinLogging
 import no.nav.sokos.pdladapter.config.Configuration
-import no.nav.sokos.pdladapter.config.propMap
-import no.nav.sokos.pdladapter.kafka.PdlPersonDokumentRoute
 import no.nav.sokos.pdladapter.metrics.Metrics
 import no.nav.sokos.pdladapter.mq.MqProducer
 import org.apache.kafka.clients.consumer.KafkaConsumer
+import kotlin.properties.Delegates
 
 private val logger = KotlinLogging.logger {}
 const val SECURE_LOGGER_NAME = "secureLogger"
@@ -23,20 +21,13 @@ fun main() {
         appState = appState,
         port = appConfig.httpPort
     )
-
     httpServer.start()
-
     appState.alive = true
 
     GlobalScope.launch {
         try {
-            val kafkaConsumer: KafkaConsumer<String, String> =
-                KafkaConsumer(
-                    appConfig.kafkaConsumerConfig.propMap(useGroupId = true, useSecurity = appConfig.useAuthentication)
-                )
-
+            val kafkaConsumer: KafkaConsumer<String, String> = KafkaConsumer(appConfig.kafkaConsumerConfig.propMap)
             val mqProducer = MqProducer(appConfig)
-            logger.info { "Applikasjonen er startet" }
             PdlPersonDokumentRoute(appConfig.kafkaConsumerConfig.topic, kafkaConsumer, mqProducer).listen(appState)
         } catch (ex: Exception) {
             logger.error("En uventet feil har oppstått", ex)
@@ -44,11 +35,11 @@ fun main() {
         }
     }
 
-
     Runtime.getRuntime().addShutdownHook(Thread {
         appState.alive = false
         httpServer.stop()
     })
+    logger.info { "Applikasjonen er startet" }
 }
 
 class ApplicationState(

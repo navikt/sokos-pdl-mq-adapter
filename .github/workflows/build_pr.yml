@@ -1,4 +1,4 @@
-name: PR build and deploy
+name: PR bygg og test
 
 on:
   pull_request:
@@ -8,7 +8,7 @@ env:
 
 jobs:
   build:
-    name: Build and push Docker container
+    name: Bygg og test kode
     runs-on: ubuntu-latest
     steps:
       - name: Sjekker ut
