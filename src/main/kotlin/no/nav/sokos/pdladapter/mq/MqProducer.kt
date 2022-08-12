@@ -10,8 +10,6 @@ import no.nav.sokos.pdladapter.config.MqProducerConfig
 import javax.jms.Connection
 import javax.jms.MessageProducer
 import javax.jms.Session
-import mu.KotlinLogging
-import no.nav.sokos.pdladapter.config.Configuration
 
 private val logger = KotlinLogging.logger {}
 
