@@ -2,7 +2,7 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.7.10'
     id 'org.betterplugin.avro' version '0.19.2-SNAPSHOT'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
-    id 'org.jsonschema2dataclass' version '4.2.0'
+    id 'org.jsonschema2dataclass' version '4.4.0'
 }
 
 group "sokos.nav.no"
