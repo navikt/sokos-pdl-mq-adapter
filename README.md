@@ -4,11 +4,14 @@ Opprett en run configuration for Bootstrap.kt og angi properties nedenfor som en
 
 ```properties
 # suppress inspection "UnusedProperty" for whole file
-USE_AUTHENTICATION=false;
-ON_PREM_KAFKA_BROKERS=0.0.0.0:9092;
+KAFKA_USE_SSL_SECURITY=false;
+KAFKA_BROKERS=0.0.0.0:9092;
 KAFKA_SCHEMA_REGISTRY=http://0.0.0.0:8081;
-KAFKA_CONSUMER_TOPIC=aapen-person-pdl-dokument-v1;
+KAFKA_SCHEMA_REGISTRY_USER=ikke_i_bruk;
+KAFKA_SCHEMA_REGISTRY_PASSWORD=ikke_i_bruk;
+KAFKA_CONSUMER_TOPIC=pdl.pdl-persondokument-v1;
 KAFKA_CONSUMER_GROUP_ID=sokos-pdl-mq-adapter-group-id;
+KAFKA_CONSUMER_OFFSET_RESET=latest;
 UR_MQ_PRODUCER_QUEUE=DEV.QUEUE.1;
 UR_MQ_HOST=0.0.0.0;
 UR_MQ_PORT=1414;
