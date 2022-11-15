@@ -14,6 +14,8 @@ spec:
     cpuThresholdPercentage: 90
   secureLogs:
     enabled: true
+  kafka:
+    pool: nav-prod
   gcp:
   resources:
     limits:
@@ -39,15 +41,12 @@ spec:
   ingresses:
     - https://sokos-pdl-mq-adapter.intern.nav.no
   env:
-    - name: ON_PREM_KAFKA_BROKERS
-      value: a01apvl00145.adeo.no:8443,a01apvl00146.adeo.no:8443,a01apvl00147.adeo.no:8443,a01apvl00148.adeo.no:8443,a01apvl00149.adeo.no:8443,a01apvl00150.adeo.no:8443
-    - name: KAFKA_SCHEMA_REGISTRY
-      value: https://kafka-schema-registry.nais.adeo.no
     - name: KAFKA_CONSUMER_TOPIC
-      value: aapen-person-pdl-dokument-v1
+      value: pdl.pdl-persondokument-v1
     - name: KAFKA_CONSUMER_GROUP_ID
       value: sokos-pdl-mq-adapter-group-id
-#      variabler for mq
+    - name: KAFKA_CONSUMER_OFFSET_RESET
+      value: latest
     - name: UR_MQ_PRODUCER_QUEUE
       value: QA.P230.OB01_PDLDATA
     - name: UR_MQ_HOST
