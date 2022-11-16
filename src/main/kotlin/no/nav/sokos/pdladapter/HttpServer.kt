@@ -23,9 +23,9 @@ import io.micrometer.core.instrument.binder.jvm.JvmThreadMetrics
 import io.micrometer.core.instrument.binder.system.ProcessorMetrics
 import io.micrometer.core.instrument.binder.system.UptimeMetrics
 import io.prometheus.client.exporter.common.TextFormat
+import java.util.concurrent.TimeUnit
 import no.nav.sokos.pdladapter.metrics.Metrics
 import org.slf4j.event.Level
-import java.util.concurrent.TimeUnit
 
 class HttpServer(
     appState: ApplicationState,
@@ -39,7 +39,10 @@ class HttpServer(
         }
         install(CallLogging) {
             level = Level.INFO
-            filter { call -> call.request.path().startsWith("/") }
+            filter { call ->
+                call.request.path().contains("/internal").not()
+                    .and(call.request.path().contains("/metrics").not())
+            }
         }
         install(MicrometerMetrics) {
             registry = Metrics.prometheusRegistry
@@ -79,6 +82,7 @@ class HttpServer(
             }
         }
     }
+
     fun start() = embeddedServer.start()
     fun stop() = embeddedServer.stop(5, 5, TimeUnit.SECONDS)
 }
