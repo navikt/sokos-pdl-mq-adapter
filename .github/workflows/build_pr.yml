@@ -15,10 +15,10 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: ${{env.COMMIT_SHA}}
-      - name: Setter opp java
-        uses: actions/setup-java@v1
+      - uses: actions/setup-java@v3
         with:
-          java-version: '17.x'
+          java-version: '17'
+          distribution: 'temurin'
       - name: Cacher gradle artifakter
         uses: actions/cache@v3
         with:
