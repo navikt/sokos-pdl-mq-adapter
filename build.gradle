@@ -1,7 +1,7 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.7.10'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
-    id 'org.jsonschema2dataclass' version '4.5.0'
+    id 'org.jsonschema2dataclass' version '5.0.0'
 }
 
 group "sokos.nav.no"
