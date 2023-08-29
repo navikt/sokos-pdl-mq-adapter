@@ -38,6 +38,14 @@ spec:
   prometheus:
     enabled: true
     path: /metrics
+  accessPolicy:
+    outbound:
+      external:
+        - host: a01apvl247.adeo.no
+          ports:
+            - name: mq
+              port: 1414
+              protocol: TCP
   ingresses:
     - https://sokos-pdl-mq-adapter.intern.nav.no
   env:
