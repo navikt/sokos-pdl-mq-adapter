@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - dev
   workflow_dispatch:
 
 env:
@@ -42,8 +43,8 @@ jobs:
           docker login ghcr.io -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
           docker push ${IMAGE}
 
-  deploy-dev-gcp:
-    name: Deploy to dev-gcp
+  deploy-dev:
+    name: Deploy to dev-fss
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -51,12 +52,12 @@ jobs:
       - uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: dev-gcp
+          CLUSTER: dev-fss
           RESOURCE: .nais/naiserator-dev.yaml
 
-  deploy-prod-gcp:
+  deploy-prod:
     name: Deploy to prod-gcp
-    needs: deploy-dev-gcp
+    needs: deploy-dev
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
