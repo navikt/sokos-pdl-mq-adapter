@@ -12,7 +12,6 @@ import javax.jms.MessageProducer
 import javax.jms.Session
 
 private val logger = KotlinLogging.logger {}
-
 class MqProducer(private val config: Configuration) {
     private lateinit var urSession: Session
     private lateinit var osSession: Session
@@ -38,7 +37,7 @@ class MqProducer(private val config: Configuration) {
     }
 
     private fun initialiserMq(connection: Connection, queueNavn: String): Pair<MessageProducer, Session> {
-        val session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE)
+        val session = connection.createSession(Session.SESSION_TRANSACTED)
         val queue = (session.createQueue(queueNavn) as MQQueue).apply {
             targetClient = WMQConstants.WMQ_CLIENT_NONJMS_MQ
             messageBodyStyle = WMQConstants.WMQ_MESSAGE_BODY_MQ
@@ -72,6 +71,11 @@ class MqProducer(private val config: Configuration) {
         }
     }
 
+    fun commit(){
+        osSession.commit()
+        urSession.commit()
+    }
+
     private fun MqProducerConfig.connect(): Connection = MQConnectionFactory().also {
         it.transportType = WMQConstants.WMQ_CM_CLIENT
         it.hostName = host
@@ -83,4 +87,5 @@ class MqProducer(private val config: Configuration) {
     }.createConnection(username, password)
 
 }
+
 
