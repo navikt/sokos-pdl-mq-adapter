@@ -5,6 +5,11 @@ on:
     branches:
       - master
       - dev
+    paths-ignore:
+      - '**.md'
+      - '.github/workflows/alerts.yaml'
+      - '.nais/alerterator-dev.yaml'
+      - '.nais/alerterator-prod.yaml'
   workflow_dispatch:
 
 env:

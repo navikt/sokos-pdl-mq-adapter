@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - -dev
+      - dev
     paths:
       - '.github/workflows/alerts.yaml'
       - '.nais/alerterator-dev.yaml'
