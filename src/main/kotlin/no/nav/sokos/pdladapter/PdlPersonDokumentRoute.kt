@@ -36,6 +36,7 @@ class PdlPersonDokumentRoute(
                                 retry { mqProducer.sendTilUr(it) }
                             }
                         }
+                    mqProducer.commit()
                     kafkaConsumer.commitSync()
                 } else {
                     delay(Duration.ofMillis(500))
