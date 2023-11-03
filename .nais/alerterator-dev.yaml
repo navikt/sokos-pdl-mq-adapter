@@ -7,7 +7,7 @@ metadata:
   namespace: okonomi
 spec:
   groups:
-    - name: {{app}}-alerts
+    - name: sokos-pdl-mq-adapter-alerts
       rules:
         - alert: Applikasjon nede
           expr: kube_deployment_status_replicas_available{deployment="{{app}}"} == 0
