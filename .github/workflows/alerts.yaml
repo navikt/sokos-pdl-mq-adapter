@@ -21,6 +21,7 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-fss
           RESOURCE: .nais/alerterator-dev.yaml
+          VARS: .nais/alerts-variabler.json
 
   apply-alerts-prod:
     name: Apply alerts to prod
