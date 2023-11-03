@@ -13,18 +13,18 @@ spec:
           expr: kube_deployment_status_replicas_available{deployment="{{app}}"} == 0
           for: 1m
           annotations:
-            action: "`kubectl describe pod \{{ $labels.log_pod_name }}  -n \{{ $labels.log_namespace }}` -> `kubectl logs \{{ $labels.log_pod_name }}  -n \{{ $labels.log_namespace }} `"
+            action: "`kubectl describe pod \{{ $labels.pod }}  -n \{{ $labels.namespace }}` -> `kubectl logs \{{ $labels.pod }}  -n \{{ $labels.namespace }} `"
             summary: "App \{{ $labels.deployment }} er nede i namespace \{{ $labels.namespace }}"
           labels:
             namespace: {{namespace}}
             severity: danger
 
         - alert: Høy andel error i logger
-          expr: sum by(log_app, log_pod_name, log_namespace) (floor(increase(logd_messages_total{log_app="{{app}}", log_level="Error"}[2m]))) > 2
+          expr: sum by(app, pod, namespace) (floor(increase(logd_messages_total{app="{{app}}", log_level="Error"}[2m]))) > 2
           for: 2m
           annotations:
-            action: "`kubectl logs \{{ $labels.log_pod_name }} -n \{{ $labels.log_namespace }}`"
-            summary: "Høy andel error i logger for app \{{ $labels.log_app }} i namespace \{{ $labels.log_namespace }}"
+            action: "`kubectl logs \{{ $labels.pod }} -n \{{ $labels.namespace }}`"
+            summary: "Høy andel error i logger for app \{{ $labels.app }} i namespace \{{ $labels.namespace }}"
           labels:
             namespace: {{namespace}}
             severity: danger
