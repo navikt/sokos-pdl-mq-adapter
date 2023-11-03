@@ -14,7 +14,7 @@ spec:
           for: 1m
           annotations:
             action: "`kubectl describe pod <podname>` -> `kubectl logs <podname>`"
-            summary: "App \{{ $labels.deployment }} er nede i namespace \{{ $labels.namespace }}"
+            summary: "App {{ $labels.deployment }} er nede i namespace {{ $labels.namespace }}"
           labels:
             namespace: okonomi
             severity: danger
@@ -23,8 +23,8 @@ spec:
           expr: sum by(log_app, log_pod_name, log_namespace) (floor(increase(logd_messages_total{log_app="{{app}}", log_level="Error"}[2m]))) > 2
           for: 2m
           annotations:
-            action: "`kubectl logs \{{ $labels.log_pod_name }} -n \{{ $labels.log_namespace }}`"
-            summary: "Høy andel error i logger for app \{{ $labels.log_app }} i namespace \{{ $labels.log_namespace }}"
+            action: "`kubectl logs {{ $labels.log_pod_name }} -n {{ $labels.log_namespace }}`"
+            summary: "Høy andel error i logger for app {{ $labels.log_app }} i namespace {{ $labels.log_namespace }}"
           labels:
             namespace: okonomi
             severity: danger
