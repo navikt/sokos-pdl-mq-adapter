@@ -8,6 +8,7 @@ on:
     paths-ignore:
       - '**.md'
       - '.github/workflows/alerts.yaml'
+      - '.nais/alerts-variabler.json'
       - '.nais/alerterator-dev.yaml'
       - '.nais/alerterator-prod.yaml'
   workflow_dispatch:
