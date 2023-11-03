@@ -30,7 +30,7 @@ fun main() = runBlocking {
         val kafkaConsumer: KafkaConsumer<String, String> = KafkaConsumer(appConfig.kafkaConsumerConfig.propMap)
         val mqProducer = MqProducer(appConfig)
         PdlPersonDokumentRoute(appConfig.kafkaConsumerConfig.topic, kafkaConsumer, mqProducer).listen(appState)
-        logger.info { "Applikasjonen er startet" }
+        logger.info { "Applikasjonen er avsluttet" }
     } catch (ex: Exception) {
         logger.error("En uventet feil har oppstått", ex)
         appState.alive = false
