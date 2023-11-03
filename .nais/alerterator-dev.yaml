@@ -13,7 +13,7 @@ spec:
           expr: kube_deployment_status_replicas_available{deployment="{{app}}"} == 0
           for: 1m
           annotations:
-            action: "`kubectl describe pod \{{ $labels.pod }}  -n \{{ $labels.namespace }}` -> `kubectl logs \{{ $labels.pod }}  -n \{{ $labels.namespace }} `"
+            action: "`Finn ut hvorfor ingen pod svarer på isAlive`"
             summary: "App \{{ $labels.deployment }} er nede i namespace \{{ $labels.namespace }}"
           labels:
             namespace: {{namespace}}
@@ -23,7 +23,7 @@ spec:
           expr: sum by(app, pod, namespace) (floor(increase(logd_messages_total{app="{{app}}", log_level="Error"}[2m]))) > 2
           for: 2m
           annotations:
-            action: "`kubectl logs \{{ $labels.pod }} -n \{{ $labels.namespace }}`"
+            action: "`Sjekk logg for app \{{ $labels.app }}`"
             summary: "Høy andel error i logger for app \{{ $labels.app }} i namespace \{{ $labels.namespace }}"
           labels:
             namespace: {{namespace}}
