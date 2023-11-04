@@ -14,43 +14,39 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE: ghcr.io/${{ github.repository }}/sokos-pdl-mq-adapter:${{ github.sha }}
+  TZ: Europe/Oslo
 
 jobs:
   build:
-    name: Build and push Docker container
-    runs-on: ubuntu-latest
     permissions:
-      contents: read
-      packages: write
+      contents: "write"
+      id-token: "write"
+    name: Build/test & push image
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
-          java-version: '17'
           distribution: 'temurin'
-      - name: Cacher gradle artifakter
-        uses: actions/cache@v3
+          java-version: '17'
+      - uses: gradle/gradle-build-action@v2.7.0
+        env: # Eksluder test dependencies
+          DEPENDENCY_GRAPH_INCLUDE_CONFIGURATIONS: compileClasspath|runtimeClasspath
         with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-      - name: Test and build
-        run: ./gradlew test shadowJar
-        env:
-          ORG_GRADLE_PROJECT_githubUser: x-access-token
-          ORG_GRADLE_PROJECT_githubPassword: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and publish Docker image
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          docker build --tag ${IMAGE} .
-          docker login ghcr.io -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
-          docker push ${IMAGE}
+          dependency-graph: generate-and-submit
+          arguments: --configuration-cache build shadowJar
+
+      - name: Push docker image to Google Artifact Registry
+        uses: nais/docker-build-push@v0
+        id: docker-build-push
+        with:
+          byosbom: dependency-graph-reports/deploy-build.json
+          team: okonomi
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+          tag: latest
+    outputs:
+      image: ${{ steps.docker-build-push.outputs.image }}
 
   deploy-dev:
     name: Deploy to dev-fss
@@ -61,6 +57,7 @@ jobs:
       - uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          IMAGE: ${{ needs.build.outputs.image }}
           CLUSTER: dev-fss
           RESOURCE: .nais/naiserator-dev.yaml
 
@@ -74,5 +71,6 @@ jobs:
       - uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          IMAGE: ${{ needs.build.outputs.image }}
           CLUSTER: prod-gcp
           RESOURCE: .nais/naiserator-prod.yaml
