@@ -36,14 +36,11 @@ jobs:
           dependency-graph: generate-and-submit
           arguments: --configuration-cache build shadowJar
 
-      - name: Setup docker buildx
-        uses: docker/setup-buildx-action@v3
-
       - name: Push docker image to Google Artifact Registry
         uses: nais/docker-build-push@v0
         id: docker-build-push
         with:
-          byosbom: dependency-graph-reports/deploy-build.json
+          byosbom: dependency-graph-reports/build_and_deploy-build.json
           team: okonomi
           identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
           project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
