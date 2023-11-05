@@ -20,7 +20,7 @@ spec:
             severity: danger
 
         - alert: Høy andel error i logger
-          expr: sum by(app, pod, namespace) (floor(increase(log_messages_errors{app="{{app}}"}[2m]))) > 1
+          expr: sum by(app, pod, namespace) (floor(increase(log_messages_errors{app="{{app}}"}[2m]))) > 0
           for: 1s
           annotations:
             action: "`Sjekk logg for app \{{ $labels.app }}`"
