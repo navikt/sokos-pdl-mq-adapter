@@ -31,6 +31,7 @@ internal class PdlPersonDokumentRouteTest {
 
         coVerify(exactly = 1) { mqProducer.sendTilOs(meldingen) }
         coVerify(exactly = 1) { mqProducer.sendTilUr(meldingen) }
+        coVerify(exactly = 1) { mqProducer.commit() }
     }
 
     @Test
@@ -62,6 +63,7 @@ internal class PdlPersonDokumentRouteTest {
 
         coVerify(exactly = 1) { mqProducer.sendTilOs(melding) }
         coVerify(exactly = 0) { kafkaConsumer.commitSync() }
+        coVerify(exactly = 0) { mqProducer.commit() }
     }
 
     @Test
@@ -73,6 +75,7 @@ internal class PdlPersonDokumentRouteTest {
         assertThrows<Exception> { runBlocking { pdlPersonDokumentRoute.listen(ApplicationState(defaultRunning = true)) } }
 
         coVerify(exactly = 5) { mqProducer.sendTilOs(melding) }
+        coVerify(exactly = 0) { mqProducer.commit() }
     }
 
     @Test
@@ -84,6 +87,7 @@ internal class PdlPersonDokumentRouteTest {
         assertThrows<Exception> { runBlocking { pdlPersonDokumentRoute.listen(ApplicationState(defaultRunning = true)) } }
 
         coVerify(exactly = 5) { mqProducer.sendTilUr(melding) }
+        coVerify(exactly = 0) { mqProducer.commit() }
     }
 
     private fun enConsumerRecord(melding: String) = ConsumerRecords(
