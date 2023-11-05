@@ -21,7 +21,7 @@ spec:
 
         - alert: Høy andel error i logger
           expr: sum by(app, pod, namespace) (floor(increase(log_messages_errors{app="{{app}}"}[2m]))) > 1
-          for: 2m
+          for: 1s
           annotations:
             action: "`Sjekk logg for app \{{ $labels.app }}`"
             summary: "Høy andel error i logger for app \{{ $labels.app }} i namespace \{{ $labels.namespace }}"
