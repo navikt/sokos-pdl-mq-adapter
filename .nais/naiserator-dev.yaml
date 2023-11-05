@@ -44,9 +44,9 @@ spec:
     - name: KAFKA_CONSUMER_TOPIC
       value: pdl.pdl-persondokument-v1
     - name: KAFKA_CONSUMER_GROUP_ID
-      value: sokos-pdl-mq-adapter-group-id-test
+      value: sokos-pdl-mq-adapter-group-id-test-2
     - name: KAFKA_CONSUMER_OFFSET_RESET
-      value: earliest
+      value: none
     - name: UR_MQ_PRODUCER_QUEUE
       value: QA.Q1_230.OB01_PDLDATA
     - name: UR_MQ_HOST
