@@ -7,7 +7,8 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    open-pull-requests-limit: 0
-    ignore:
-      - dependency-name: "*"
-        update-types: [version-update:semver-patch]
+    open-pull-requests-limit: 10
+    groups:
+      gradle:
+        patterns:
+          - "*"
