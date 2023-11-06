@@ -24,7 +24,7 @@ final def avroVersion = '1.11.0'
 final def kafkaAvroSerializerVersion = '7.3.0'
 final def kotlin_logging_version = '3.0.4'
 final def mq_version = '9.3.0.0'
-final def junit_version = '5.9.0'
+final def junit_version = '5.10.1'
 final def mockk_version = '1.13.2'
 
 
