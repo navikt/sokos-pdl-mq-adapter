@@ -72,5 +72,5 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           IMAGE: ${{ needs.build.outputs.image }}
-          CLUSTER: prod-gcp
+          CLUSTER: prod-fss
           RESOURCE: .nais/naiserator-prod.yaml

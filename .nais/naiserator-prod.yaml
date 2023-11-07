@@ -38,14 +38,6 @@ spec:
   prometheus:
     enabled: true
     path: /metrics
-  accessPolicy:
-    outbound:
-      external:
-        - host: a01apvl247.adeo.no
-          ports:
-            - name: mq
-              port: 1414
-              protocol: TCP
   ingresses:
     - https://sokos-pdl-mq-adapter.intern.nav.no
   env:
@@ -54,7 +46,7 @@ spec:
     - name: KAFKA_CONSUMER_GROUP_ID
       value: sokos-pdl-mq-adapter-group-id
     - name: KAFKA_CONSUMER_OFFSET_RESET
-      value: latest
+      value: none
     - name: UR_MQ_PRODUCER_QUEUE
       value: QA.P230.OB01_PDLDATA
     - name: UR_MQ_HOST
