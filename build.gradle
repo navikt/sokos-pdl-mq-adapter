@@ -16,7 +16,7 @@ repositories {
 
 final def ktor_version = '2.3.6'
 final def kotlin_version = '1.9.20'
-final def logback_version = '1.4.11'
+final def logback_version = '1.4.12'
 final def logstash_version = '7.4'
 final def prometheus_version = '1.11.5'
 final def kafkaClientVersion = '7.5.2-ce'
