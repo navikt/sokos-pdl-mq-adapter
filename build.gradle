@@ -1,5 +1,5 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.9.20'
+    id 'org.jetbrains.kotlin.jvm' version '1.9.22'
     id 'com.github.johnrengelman.shadow' version '8.1.1'
     id 'org.jsonschema2dataclass' version '6.0.0'
 }
@@ -14,18 +14,18 @@ repositories {
     }
 }
 
-final def ktor_version = '2.3.6'
-final def kotlin_version = '1.9.20'
-final def logback_version = '1.4.11'
+final def ktor_version = '2.3.7'
+final def kotlin_version = '1.9.22'
+final def logback_version = '1.4.14'
 final def logstash_version = '7.4'
-final def prometheus_version = '1.11.5'
-final def kafkaClientVersion = '7.5.2-ce'
+final def prometheus_version = '1.12.1'
+final def kafkaClientVersion = '7.5.3-ce'
 final def avroVersion = '1.11.3'
-final def kafkaAvroSerializerVersion = '7.5.2'
+final def kafkaAvroSerializerVersion = '7.5.3'
 final def kotlin_logging_version = '3.0.5'
-final def mq_version = '9.3.4.0'
+final def mq_version = '9.3.4.1'
 final def junit_version = '5.10.1'
-final def mockk_version = '1.13.8'
+final def mockk_version = '1.13.9'
 
 
 dependencies {
