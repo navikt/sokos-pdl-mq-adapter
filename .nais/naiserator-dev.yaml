@@ -50,7 +50,7 @@ spec:
     - name: UR_MQ_PRODUCER_QUEUE
       value: QA.Q1_230.OB01_PDLDATA
     - name: UR_MQ_HOST
-      value: b27apvl219.preprod.local
+      value: mqls01.preprod.local
     - name: UR_MQ_PORT
       value: "1413"
     - name: UR_MQ_QUEUE_MANAGER_NAME
@@ -60,7 +60,7 @@ spec:
     - name: OS_MQ_PRODUCER_QUEUE
       value: QA.Q1_231.OB04_PDLDATA
     - name: OS_MQ_HOST
-      value: b27apvl219.preprod.local
+      value: mqls01.preprod.local
     - name: OS_MQ_PORT
       value: "1413"
     - name: OS_MQ_QUEUE_MANAGER_NAME
