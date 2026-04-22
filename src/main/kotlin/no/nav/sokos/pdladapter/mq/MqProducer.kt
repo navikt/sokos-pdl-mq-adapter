@@ -1,18 +1,22 @@
 package no.nav.sokos.pdladapter.mq
 
-import com.ibm.mq.jms.MQConnectionFactory
-import com.ibm.mq.jms.MQQueue
-import com.ibm.msg.client.jms.JmsConstants
-import com.ibm.msg.client.wmq.WMQConstants
+import com.ibm.mq.jakarta.jms.MQConnectionFactory
+import com.ibm.mq.jakarta.jms.MQQueue
+import com.ibm.msg.client.jakarta.jms.JmsConstants
+import com.ibm.msg.client.jakarta.wmq.WMQConstants
+import jakarta.jms.Connection
+import jakarta.jms.MessageProducer
+import jakarta.jms.Session
 import mu.KotlinLogging
+
 import no.nav.sokos.pdladapter.config.Configuration
 import no.nav.sokos.pdladapter.config.MqProducerConfig
-import javax.jms.Connection
-import javax.jms.MessageProducer
-import javax.jms.Session
 
 private val logger = KotlinLogging.logger {}
-class MqProducer(private val config: Configuration) {
+
+class MqProducer(
+    private val config: Configuration,
+) {
     private lateinit var urSession: Session
     private lateinit var osSession: Session
     private lateinit var urMessageProducer: MessageProducer
@@ -36,12 +40,16 @@ class MqProducer(private val config: Configuration) {
         connected = true
     }
 
-    private fun initialiserMq(connection: Connection, queueNavn: String): Pair<MessageProducer, Session> {
+    private fun initialiserMq(
+        connection: Connection,
+        queueNavn: String,
+    ): Pair<MessageProducer, Session> {
         val session = connection.createSession(Session.SESSION_TRANSACTED)
-        val queue = (session.createQueue(queueNavn) as MQQueue).apply {
-            targetClient = WMQConstants.WMQ_CLIENT_NONJMS_MQ
-            messageBodyStyle = WMQConstants.WMQ_MESSAGE_BODY_MQ
-        }
+        val queue =
+            (session.createQueue(queueNavn) as MQQueue).apply {
+                targetClient = WMQConstants.WMQ_CLIENT_NONJMS_MQ
+                messageBodyStyle = WMQConstants.WMQ_MESSAGE_BODY_MQ
+            }
         val messageProducer = session.createProducer(queue)
         connection.start()
         logger.info("Koblet til MQ $queueNavn")
@@ -57,7 +65,6 @@ class MqProducer(private val config: Configuration) {
             connected = false
             throw ex
         }
-
     }
 
     fun sendTilOs(message: String) {
@@ -71,21 +78,20 @@ class MqProducer(private val config: Configuration) {
         }
     }
 
-    fun commit(){
+    fun commit() {
         osSession.commit()
         urSession.commit()
     }
 
-    private fun MqProducerConfig.connect(): Connection = MQConnectionFactory().also {
-        it.transportType = WMQConstants.WMQ_CM_CLIENT
-        it.hostName = host
-        it.port = port.toInt()
-        it.channel = channel
-        it.queueManager = name
-        it.targetClientMatching = true
-        it.setBooleanProperty(JmsConstants.USER_AUTHENTICATION_MQCSP, true)
-    }.createConnection(username, password)
-
+    private fun MqProducerConfig.connect(): Connection =
+        MQConnectionFactory()
+            .also {
+                it.transportType = WMQConstants.WMQ_CM_CLIENT
+                it.hostName = host
+                it.port = port.toInt()
+                it.channel = channel
+                it.queueManager = name
+                it.targetClientMatching = true
+                it.setBooleanProperty(JmsConstants.USER_AUTHENTICATION_MQCSP, true)
+            }.createConnection(username, password)
 }
-
-
