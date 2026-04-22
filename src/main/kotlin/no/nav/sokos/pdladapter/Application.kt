@@ -14,6 +14,7 @@ import no.nav.sokos.pdladapter.config.applicationLifecycleConfig
 import no.nav.sokos.pdladapter.config.commonConfig
 import no.nav.sokos.pdladapter.config.routingConfig
 import no.nav.sokos.pdladapter.mq.MqProducer
+import no.nav.sokos.pdladapter.pdl.PdlService
 
 private val logger = KotlinLogging.logger {}
 
@@ -34,7 +35,7 @@ fun Application.module() {
             try {
                 val kafkaConsumer: KafkaConsumer<String, String> = KafkaConsumer(appConfig.kafkaConsumerConfig.propMap)
                 val mqProducer = MqProducer(appConfig)
-                PdlPersonDokumentRoute(appConfig.kafkaConsumerConfig.topic, kafkaConsumer, mqProducer).listen(applicationState)
+                PdlService(appConfig.kafkaConsumerConfig.topic, kafkaConsumer, mqProducer).listen(applicationState)
                 logger.info { "Applikasjonen er avsluttet" }
             } catch (ex: Exception) {
                 logger.error("En uventet feil har oppstått", ex)

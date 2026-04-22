@@ -18,19 +18,19 @@ import org.apache.kafka.clients.consumer.ConsumerRecords
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import org.apache.kafka.common.TopicPartition
 
-import no.nav.sokos.pdladapter.PdlPersonDokumentRoute
 import no.nav.sokos.pdladapter.config.ApplicationState
 import no.nav.sokos.pdladapter.mq.MqProducer
+import no.nav.sokos.pdladapter.pdl.PdlService
 
 private const val KAFKA_TOPIC: String = "Ikke_interessant"
 const val MELDING = "Dette er meldingen"
 
-internal class PdlPersonDokumentRouteTest :
+internal class PdlServiceTest :
     FunSpec({
 
         val kafkaConsumer = mockk<KafkaConsumer<String, String>>(relaxed = true)
         val mqProducer = mockk<MqProducer>(relaxed = true)
-        val pdlPersonDokumentRoute = PdlPersonDokumentRoute(KAFKA_TOPIC, kafkaConsumer, mqProducer)
+        val pdlPersonDokumentRoute = PdlService(KAFKA_TOPIC, kafkaConsumer, mqProducer)
 
         afterTest {
             clearAllMocks()

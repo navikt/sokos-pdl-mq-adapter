@@ -1,4 +1,4 @@
-package no.nav.sokos.pdladapter
+package no.nav.sokos.pdladapter.pdl
 
 import java.time.Duration
 import java.util.UUID
@@ -17,7 +17,7 @@ import no.nav.sokos.pdladapter.mq.MqProducer
 
 private val logger = KotlinLogging.logger {}
 
-class PdlPersonDokumentRoute(
+class PdlService(
     private val kafkaTopic: String,
     private val kafkaConsumer: KafkaConsumer<String, String>,
     private val mqProducer: MqProducer,
