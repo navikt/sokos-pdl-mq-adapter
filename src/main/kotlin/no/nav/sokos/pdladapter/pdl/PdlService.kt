@@ -1,14 +1,12 @@
 package no.nav.sokos.pdladapter.pdl
 
 import java.time.Duration
-import java.util.UUID
 
 import kotlinx.coroutines.time.delay
 
 import mu.KotlinLogging
 import org.apache.kafka.clients.consumer.ConsumerRecords
 import org.apache.kafka.clients.consumer.KafkaConsumer
-import org.slf4j.MDC
 
 import no.nav.sokos.pdladapter.config.ApplicationState
 import no.nav.sokos.pdladapter.config.TEAM_LOGS_MARKER
@@ -30,7 +28,6 @@ class PdlService(
                 if (!consumerRecords.isEmpty) {
                     consumerRecords
                         .forEach { record ->
-                            MDC.put("x-correlation-id", UUID.randomUUID().toString())
                             Metrics.antallMeldingerMottattFraKafka.inc()
                             logger.info(
                                 "Record mottatt med offset = ${record.offset()}, partisjon = ${record.partition()}, topic = ${record.topic()}",
