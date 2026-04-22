@@ -1,11 +1,8 @@
 package no.nav.sokos.pdladapter
 
-import kotlinx.coroutines.runBlocking
-
 import io.ktor.server.application.Application
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
-import mu.KotlinLogging
 import org.apache.kafka.clients.consumer.KafkaConsumer
 
 import no.nav.sokos.pdladapter.config.ApplicationState
@@ -15,8 +12,7 @@ import no.nav.sokos.pdladapter.config.commonConfig
 import no.nav.sokos.pdladapter.config.routingConfig
 import no.nav.sokos.pdladapter.mq.MqProducer
 import no.nav.sokos.pdladapter.pdl.PdlService
-
-private val logger = KotlinLogging.logger {}
+import no.nav.sokos.pdladapter.util.launchBackgroundTask
 
 fun main() {
     embeddedServer(Netty, port = 8080, module = Application::module).start(true)
@@ -30,17 +26,11 @@ fun Application.module() {
     commonConfig()
     routingConfig(applicationState)
 
-    runBlocking {
-        do {
-            try {
-                val kafkaConsumer: KafkaConsumer<String, String> = KafkaConsumer(appConfig.kafkaConsumerConfig.propMap)
-                val mqProducer = MqProducer(appConfig)
-                PdlService(appConfig.kafkaConsumerConfig.topic, kafkaConsumer, mqProducer).listen(applicationState)
-                logger.info { "Applikasjonen er avsluttet" }
-            } catch (ex: Exception) {
-                logger.error("En uventet feil har oppstått", ex)
-                applicationState.alive = false
-            }
-        } while (applicationState.alive)
+    applicationState.onReady = {
+        val kafkaConsumer: KafkaConsumer<String, String> = KafkaConsumer(appConfig.kafkaConsumerConfig.propMap)
+        val mqProducer = MqProducer(appConfig)
+        launchBackgroundTask(applicationState) {
+            PdlService(appConfig.kafkaConsumerConfig.topic, kafkaConsumer, mqProducer).listen(applicationState)
+        }
     }
 }
