@@ -3,7 +3,7 @@ name: Deploy application
 on:
   push:
     branches:
-      - main
+      - master
     paths-ignore:
       - '**.md'
       - 'LICENCE'
