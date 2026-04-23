@@ -1,14 +1,25 @@
-# Please see the documentation for all configuration options:
-# https://help.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
-
 version: 2
 updates:
   - package-ecosystem: gradle
     directory: "/"
     schedule:
-      interval: "daily"
-    open-pull-requests-limit: 10
+      interval: daily
+      time: "08:00"
+      timezone: "Europe/Oslo"
+    cooldown:
+      default-days: 7
     groups:
-      gradle:
+      kotlin-plugins:
         patterns:
-          - "*"
+          - "jvm"
+          - "plugin.serialization"
+        update-types:
+          - minor
+          - patch
+      gradle-minor-patch:
+        update-types:
+          - minor
+          - patch
+        exclude-patterns:
+          - "jvm"
+          - "plugin.serialization"

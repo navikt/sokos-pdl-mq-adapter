@@ -1,23 +1,24 @@
-package no.nav.sokos.pdladapter
+package no.nav.sokos.pdladapter.pdl
+
+import java.time.Duration
 
 import kotlinx.coroutines.time.delay
+
 import mu.KotlinLogging
-import no.nav.sokos.pdladapter.metrics.Metrics
-import no.nav.sokos.pdladapter.mq.MqProducer
 import org.apache.kafka.clients.consumer.ConsumerRecords
 import org.apache.kafka.clients.consumer.KafkaConsumer
-import org.slf4j.MDC
-import java.time.Duration
-import java.util.*
+
+import no.nav.sokos.pdladapter.config.ApplicationState
+import no.nav.sokos.pdladapter.config.TEAM_LOGS_MARKER
+import no.nav.sokos.pdladapter.metrics.Metrics
+import no.nav.sokos.pdladapter.mq.MqProducer
 
 private val logger = KotlinLogging.logger {}
-private val secureLogger = KotlinLogging.logger(SECURE_LOGGER_NAME)
 
-
-class PdlPersonDokumentRoute(
+class PdlService(
     private val kafkaTopic: String,
     private val kafkaConsumer: KafkaConsumer<String, String>,
-    private val mqProducer: MqProducer
+    private val mqProducer: MqProducer,
 ) {
     suspend fun listen(appState: ApplicationState) {
         kafkaConsumer.use { kafkaConsumer ->
@@ -27,10 +28,11 @@ class PdlPersonDokumentRoute(
                 if (!consumerRecords.isEmpty) {
                     consumerRecords
                         .forEach { record ->
-                            MDC.put("x-correlation-id", UUID.randomUUID().toString())
                             Metrics.antallMeldingerMottattFraKafka.inc()
-                            logger.info("Record mottatt med offset = ${record.offset()}, partisjon = ${record.partition()}, topic = ${record.topic()}")
-                            secureLogger.info("Record: key = ${record.key()}, value = ${record.value()}")
+                            logger.info(
+                                "Record mottatt med offset = ${record.offset()}, partisjon = ${record.partition()}, topic = ${record.topic()}",
+                            )
+                            logger.info(marker = TEAM_LOGS_MARKER) { "Record: key = ${record.key()}, value = ${record.value()}" }
                             record.value()?.let {
                                 retry { mqProducer.sendTilOs(it) }
                                 retry { mqProducer.sendTilUr(it) }
@@ -44,5 +46,21 @@ class PdlPersonDokumentRoute(
             } while (appState.alive)
         }
     }
+}
 
+suspend fun <T> retry(
+    numOfRetries: Int = 5,
+    initialDelayMs: Long = 250,
+    block: suspend () -> T,
+): T {
+    var throwable: Exception? = null
+    for (n in 1..numOfRetries) {
+        try {
+            return block()
+        } catch (ex: Exception) {
+            throwable = ex
+            kotlinx.coroutines.delay(initialDelayMs)
+        }
+    }
+    throw throwable!!
 }

@@ -1,0 +1,76 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: sokos-pdl-mq-adapter
+  namespace: okonomi
+  labels:
+    team: okonomi
+spec:
+  image: "{{{ image }}}"
+  port: 8080
+  replicas:
+    min: 1
+    max: 2
+    cpuThresholdPercentage: 75
+  liveness:
+    path: /internal/isAlive
+    initialDelay: 5
+    timeout: 5
+    periodSeconds: 5
+    failureThreshold: 30
+  readiness:
+    path: /internal/isReady
+    initialDelay: 5
+    periodSeconds: 5
+    timeout: 5
+  resources:
+    limits:
+      memory: 4096Mi
+    requests:
+      cpu: 100m
+      memory: 512Mi
+  ingresses:
+    - https://sokos-pdl-mq-adapter.intern.nav.no
+  prometheus:
+    enabled: true
+    path: /internal/metrics
+  observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: java
+  accessPolicy:
+    outbound:
+      rules:
+        - application: logging
+          namespace: nais-system
+  kafka:
+    pool: nav-prod
+  env:
+    - name: KAFKA_CONSUMER_TOPIC
+      value: pdl.pdl-persondokument-v1
+    - name: KAFKA_CONSUMER_GROUP_ID
+      value: sokos-pdl-mq-adapter-group-id
+    - name: KAFKA_CONSUMER_OFFSET_RESET
+      value: none
+    - name: UR_MQ_PRODUCER_QUEUE
+      value: QA.P230.OB01_PDLDATA
+    - name: UR_MQ_HOST
+      value: a01apvl247.adeo.no
+    - name: UR_MQ_PORT
+      value: "1414"
+    - name: UR_MQ_QUEUE_MANAGER_NAME
+      value: MPLS01
+    - name: UR_MQ_CHANNEL
+      value: P_SOKOS_PDL_PERSON
+    - name: OS_MQ_PRODUCER_QUEUE
+      value: QA.P231.OB04_PDLDATA
+    - name: OS_MQ_HOST
+      value: a01apvl247.adeo.no
+    - name: OS_MQ_PORT
+      value: "1414"
+    - name: OS_MQ_QUEUE_MANAGER_NAME
+      value: MPLS01
+    - name: OS_MQ_CHANNEL
+      value: P_SOKOS_PDL_PERSON
+  envFrom:
+    - secret: sokos-pdl-mq-adapter-secrets

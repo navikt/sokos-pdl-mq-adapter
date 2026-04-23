@@ -1,44 +1,105 @@
+# sokos-pdl-mq-adapter
 
-### Properties
-Opprett en run configuration for Bootstrap.kt og angi properties nedenfor som environment-variable
+* [1. Dokumentasjon](dokumentasjon/dokumentasjon.md)
+* [2. Funksjonelle krav](#2-funksjonelle-krav)
+* [3. Utviklingsmiljø](#3-utviklingsmiljø)
+* [4. Programvarearkitektur](#4-programvarearkitektur)
+* [5. Deployment](#5-deployment)
+* [6. Autentisering](#6-autentisering)
+* [7. Drift og støtte](#7-drift-og-støtte)
+* [8. Henvendelser](#8-henvendelser)
 
-```properties
-# suppress inspection "UnusedProperty" for whole file
-KAFKA_USE_SSL_SECURITY=false;
-KAFKA_BROKERS=0.0.0.0:9092;
-KAFKA_SCHEMA_REGISTRY=http://0.0.0.0:8081;
-KAFKA_SCHEMA_REGISTRY_USER=ikke_i_bruk;
-KAFKA_SCHEMA_REGISTRY_PASSWORD=ikke_i_bruk;
-KAFKA_CONSUMER_TOPIC=pdl.pdl-persondokument-v1;
-KAFKA_CONSUMER_GROUP_ID=sokos-pdl-mq-adapter-group-id;
-KAFKA_CONSUMER_OFFSET_RESET=latest;
-UR_MQ_PRODUCER_QUEUE=DEV.QUEUE.1;
-UR_MQ_HOST=0.0.0.0;
-UR_MQ_PORT=1414;
-UR_MQ_QUEUE_MANAGER_NAME=mq_mngr_lokal;
-UR_MQ_CHANNEL=DEV.APP.SVRCONN;
-OS_MQ_PRODUCER_QUEUE=DEV.QUEUE.2;
-OS_MQ_HOST=0.0.0.0;
-OS_MQ_PORT=1414;
-OS_MQ_QUEUE_MANAGER_NAME=mq_mngr_lokal;
-OS_MQ_CHANNEL=DEV.APP.SVRCONN;
-MQ_USERNAME=app;
-MQ_PASSWORD=passw0rd;
-HTTP_PORT=8042;
-KAFKA_CONSUMER_USERNAME="";
-KAFKA_CONSUMER_PASSWORD="";
-LOG_APPENDER=CONSOLE;
+---
+
+# 2. Funksjonelle Krav
+
+Applikasjonen lytter på identendringer i PDL og sender melding til MQ når det skjer en endring til OS og UR.
+
+# 3. Utviklingsmiljø
+
+### Forutsetninger
+
+* Java 25
+* [Gradle](https://gradle.org/)
+* [Kotest IntelliJ Plugin](https://plugins.jetbrains.com/plugin/14080-kotest)
+
+### Bygge prosjekt
+
+`./gradlew build installDist`
+
+### Lokal utvikling
+
+
+# 4. Programvarearkitektur
+
+```mermaid
+flowchart LR
+
+    PDL[PDL]
+    APP[sokos-pdl-mq-adapter]
+    MQ[(MQ)]
+    OS[OS]
+    UR[UR]
+
+    PDL -->|Identendringer| APP
+    APP -->|Publiserer melding| MQ
+    MQ -->|Melding| OS
+    MQ -->|Melding| UR
 ```
-### docker-compose
-Start kafka avhengigheter og postgres databse ved å kjøre
+
+# 5. Deployment
+
+Distribusjon av tjenesten er gjort med bruk av Github Actions.
+[sokos-pdl-mq-adapter CI / CD](https://github.com/navikt/sokos-pdl-mq-adapter/actions)
+
+Push/merge til main branche vil teste, bygge og deploye til produksjonsmiljø og testmiljø.
+
+# 6. Autentisering
+
+Applikasjonen har ingen endepunkter og trenger derfor ingen autentisering men tilganger styres gjennom brukernavn/passord og sertifikater for å koble til PDL og MQ.
+
+# 7. Drift og støtte
+
+### Logging
+
+Feilmeldinger og infomeldinger som ikke innheholder sensitive data logges til [Grafana Loki](https://docs.nais.io/observability/logging/#grafana-loki).  
+Sensitive meldinger logges til [Team Logs](https://doc.nais.io/observability/logging/how-to/team-logs/).
+
+### Kubectl
+
+For dev-gcp:
+
+```shell script
+kubectl config use-context dev-gcp
+kubectl get pods -n okonomi | grep sokos-pdl-mq-adapter
+kubectl logs -f sokos-pdl-mq-adapter-<POD-ID> --namespace okonomi -c sokos-pdl-mq-adapter
 ```
-docker compose up -d
-``` 
-i mappen som har docker-compose.yml fila.
 
-Det finnes en kafka produser i test pakken devtools som produserer identhendelse og en PDL mock server, denne har hardokdede responser
+For prod-gcp:
 
-For å kjøre applikasjonen lokalt trengs en IBM mq server den kan snakke med
+```shell script
+kubectl config use-context prod-gcp
+kubectl get pods -n okonomi | grep sokos-pdl-mq-adapter
+kubectl logs -f sokos-pdl-mq-adapter-<POD-ID> --namespace okonomi -c sokos-pdl-mq-adapter
+```
 
-GUI er da tilgjengelig på https://0.0.0.0:9443/ibmmq/console/ med brukernav admin og passord passw0rd
+### Alarmer
+
+Applikasjonen bruker [Grafana Alerting](https://grafana.nav.cloud.nais.io/alerting/) for overvåkning og varsling.
+
+Varsler blir sendt til følgende Slack-kanaler:
+
+- Dev-miljø: [#team-mob-alerts-dev](https://nav-it.slack.com/archives/C042SF2FEQM)
+- Prod-miljø: [#team-mob-alerts-prod](https://nav-it.slack.com/archives/C042ESY71GX)
+
+### Grafana
+
+- [appavn](url)
+
+---
+
+# 8. Henvendelser
+
+Spørsmål knyttet til koden eller prosjektet kan stilles som issues her på Github.
+Interne henvendelser kan sendes via Slack i kanalen [#utbetaling](https://nav-it.slack.com/archives/CKZADNFBP)
 

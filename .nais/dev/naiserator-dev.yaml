@@ -6,40 +6,45 @@ metadata:
   labels:
     team: okonomi
 spec:
-  image: {{image}}
+  image: "{{{ image }}}"
   port: 8080
   replicas:
     min: 1
-    max: 1
-    cpuThresholdPercentage: 90
-  secureLogs:
-    enabled: true
-  kafka:
-    pool: nav-prod
-  gcp:
-  resources:
-    limits:
-      cpu: 2000m
-      memory: 4Gi
-    requests:
-      cpu: 500m
-      memory: 512Mi
+    max: 2
+    cpuThresholdPercentage: 75
   liveness:
-    path: /internal/is_alive
+    path: /internal/isAlive
     initialDelay: 30
     timeout: 5
     periodSeconds: 5
     failureThreshold: 30
   readiness:
-    path: /internal/is_ready
+    path: /internal/isReady
     initialDelay: 60
     periodSeconds: 5
     timeout: 5
+  resources:
+    limits:
+      memory: 4096Mi
+    requests:
+      cpu: 100m
+      memory: 512Mi
+  ingresses:
+    - https://sokos-pdl-mq-adapter.intern.dev.nav.no
   prometheus:
     enabled: true
-    path: /metrics
-  ingresses:
-    - https://sokos-pdl-mq-adapter.intern.nav.no
+    path: /internal/metrics
+  observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: java
+  accessPolicy:
+    outbound:
+      rules:
+        - application: logging
+          namespace: nais-system
+  kafka:
+    pool: nav-dev
   env:
     - name: KAFKA_CONSUMER_TOPIC
       value: pdl.pdl-persondokument-v1
@@ -48,24 +53,24 @@ spec:
     - name: KAFKA_CONSUMER_OFFSET_RESET
       value: none
     - name: UR_MQ_PRODUCER_QUEUE
-      value: QA.P230.OB01_PDLDATA
+      value: QA.Q1_230.OB01_PDLDATA
     - name: UR_MQ_HOST
-      value: a01apvl247.adeo.no
+      value: mqls01.preprod.local
     - name: UR_MQ_PORT
-      value: "1414"
+      value: "1413"
     - name: UR_MQ_QUEUE_MANAGER_NAME
-      value: MPLS01
+      value: MQLS01
     - name: UR_MQ_CHANNEL
-      value: P_SOKOS_PDL_PERSON
+      value: Q1_SOKOS_PDL_PERSON
     - name: OS_MQ_PRODUCER_QUEUE
-      value: QA.P231.OB04_PDLDATA
+      value: QA.Q1_231.OB04_PDLDATA
     - name: OS_MQ_HOST
-      value: a01apvl247.adeo.no
+      value: mqls01.preprod.local
     - name: OS_MQ_PORT
-      value: "1414"
+      value: "1413"
     - name: OS_MQ_QUEUE_MANAGER_NAME
-      value: MPLS01
+      value: MQLS01
     - name: OS_MQ_CHANNEL
-      value: P_SOKOS_PDL_PERSON
+      value: Q1_SOKOS_PDL_PERSON
   envFrom:
     - secret: sokos-pdl-mq-adapter-secrets
