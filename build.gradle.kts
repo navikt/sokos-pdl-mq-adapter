@@ -20,7 +20,7 @@ repositories {
 }
 
 val ktorVersion = "3.4.2"
-val micrometerVersion = "1.16.4"
+val micrometerVersion = "1.16.5"
 val kotlinLoggingVersion = "3.0.5"
 val logbackVersion = "1.5.32"
 val logstashVersion = "9.0"
