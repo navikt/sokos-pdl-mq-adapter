@@ -45,6 +45,8 @@ spec:
           namespace: nais-system
   kafka:
     pool: nav-prod
+  envFrom:
+    - secret: sokos-pdl-mq-adapter-secrets
   env:
     - name: KAFKA_CONSUMER_TOPIC
       value: pdl.pdl-persondokument-v1
@@ -72,5 +74,3 @@ spec:
       value: MPLS01
     - name: OS_MQ_CHANNEL
       value: P_SOKOS_PDL_PERSON
-  envFrom:
-    - secret: sokos-pdl-mq-adapter-secrets
