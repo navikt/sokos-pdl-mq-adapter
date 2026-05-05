@@ -19,7 +19,7 @@ repositories {
     maven { url = uri("https://packages.confluent.io/maven/") }
 }
 
-val ktorVersion = "3.4.2"
+val ktorVersion = "3.4.3"
 val micrometerVersion = "1.16.5"
 val kotlinLoggingVersion = "3.0.5"
 val logbackVersion = "1.5.32"
