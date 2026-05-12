@@ -88,11 +88,11 @@ configurations.all {
             }
             if (requested.group == "io.netty" && requested.name == "netty-codec-http") {
                 useVersion("4.2.13.Final")
-                "CVE-2026-42587: Netty HttpContentDecompressor maxAllocation bypass with br/zstd/snappy leads to decompression bomb DoS. Affected version = 4.2.11.Final, patched in >= 4.2.13.Final"
+                because("CVE-2026-42587: Netty HttpContentDecompressor maxAllocation bypass with br/zstd/snappy leads to decompression bomb DoS. Affected version = 4.2.11.Final, patched in >= 4.2.13.Final")
             }
             if (requested.group == "io.netty" && requested.name == "netty-codec-http2") {
                 useVersion("4.2.13.Final")
-                "CVE-2026-42587: Netty HttpContentDecompressor maxAllocation bypass with br/zstd/snappy leads to decompression bomb DoS. Affected version = 4.2.11.Final, patched in >= 4.2.13.Final"
+                because("CVE-2026-42587: Netty HttpContentDecompressor maxAllocation bypass with br/zstd/snappy leads to decompression bomb DoS. Affected version = 4.2.11.Final, patched in >= 4.2.13.Final")
             }
         }
     }
