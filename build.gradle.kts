@@ -88,11 +88,21 @@ configurations.all {
             }
             if (requested.group == "io.netty" && requested.name == "netty-codec-http") {
                 useVersion("4.2.13.Final")
-                because("CVE-2026-42587: Netty HttpContentDecompressor maxAllocation bypass with br/zstd/snappy leads to decompression bomb DoS. Affected version = 4.2.11.Final, patched in >= 4.2.13.Final")
+                because(
+                    "CVE-2026-42587: Netty HttpContentDecompressor maxAllocation bypass with br/zstd/snappy leads to decompression bomb DoS. Affected version = 4.2.11.Final, patched in >= 4.2.13.Final",
+                )
             }
             if (requested.group == "io.netty" && requested.name == "netty-codec-http2") {
                 useVersion("4.2.13.Final")
-                because("CVE-2026-42587: Netty HttpContentDecompressor maxAllocation bypass with br/zstd/snappy leads to decompression bomb DoS. Affected version = 4.2.11.Final, patched in >= 4.2.13.Final")
+                because(
+                    "CVE-2026-42587: Netty HttpContentDecompressor maxAllocation bypass with br/zstd/snappy leads to decompression bomb DoS. Affected version = 4.2.11.Final, patched in >= 4.2.13.Final",
+                )
+            }
+            if (requested.group == "io.netty" && requested.name == "netty-transport-native-epoll") {
+                useVersion("4.2.13.Final")
+                because(
+                    "CVE-2026-42577: Netty's epoll transport fails to detect and close TCP connections that receive a RST after being half-closed, leading to stale channels that are never cleaned up and, in some code paths, a 100% CPU busy-loop in the event loop thread. Affected version < 4.2.13.Final, patched in >= 4.2.13.Final",
+                )
             }
         }
     }
