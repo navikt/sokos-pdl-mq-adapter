@@ -108,6 +108,10 @@ configurations.all {
                     "CVE-2026-42577: Netty's epoll transport fails to detect and close TCP connections that receive a RST after being half-closed, leading to stale channels that are never cleaned up and, in some code paths, a 100% CPU busy-loop in the event loop thread. Affected version < 4.2.13.Final, patched in >= 4.2.13.Final",
                 )
             }
+            if (requested.group == "io.opentelemetry" && requested.name == "opentelemetry-api") {
+                useVersion("1.62.0")
+                because("OpenTelemetry Java SDK has Unbounded Memory Allocation in W3C Baggage Propagation. Affected version <= 1.61.0")
+            }
         }
     }
 }
