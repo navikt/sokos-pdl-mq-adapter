@@ -102,6 +102,12 @@ configurations.all {
                     "CVE-2026-42587: Netty HttpContentDecompressor maxAllocation bypass with br/zstd/snappy leads to decompression bomb DoS. Affected version = 4.2.11.Final, patched in >= 4.2.13.Final",
                 )
             }
+            if (requested.group == "io.netty" && requested.name == "netty-handler") {
+                useVersion("4.2.15.Final")
+                because(
+                    "CVE-2026-44249 and CVE-2026-45416: enforce patched netty-handler version in production runtime classpath",
+                )
+            }
             if (requested.group == "io.netty" && requested.name == "netty-transport-native-epoll") {
                 useVersion("4.2.13.Final")
                 because(
