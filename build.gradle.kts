@@ -31,7 +31,7 @@ val kafkaAvroSerializerVersion = "8.1.1"
 val ibmmqVersion = "10.0.0.0"
 val mockkVersion = "1.14.11"
 val kotlinVersion = "2.3.10"
-val kotestVersion = "6.1.11"
+val kotestVersion = "6.2.1"
 
 dependencies {
     // Ktor server
