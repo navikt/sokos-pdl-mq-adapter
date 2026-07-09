@@ -24,7 +24,6 @@ val micrometerVersion = "1.17.0"
 val kotlinLoggingVersion = "3.0.5"
 val logbackVersion = "1.5.34"
 val logstashVersion = "9.0"
-val janionVersion = "3.1.12"
 val kafkaClientsVersion = "8.1.1-ce"
 val avroVersion = "1.12.1"
 val kafkaAvroSerializerVersion = "8.1.1"
@@ -49,7 +48,6 @@ dependencies {
     // Logging
     implementation("io.github.microutils:kotlin-logging-jvm:$kotlinLoggingVersion")
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
-    runtimeOnly("org.codehaus.janino:janino:$janionVersion")
     runtimeOnly("net.logstash.logback:logstash-logback-encoder:$logstashVersion")
     implementation("io.github.microutils:kotlin-logging-jvm:$kotlinLoggingVersion")
 
