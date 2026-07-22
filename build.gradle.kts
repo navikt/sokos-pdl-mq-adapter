@@ -3,8 +3,8 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "2.3.21"
-    kotlin("plugin.serialization") version "2.3.21"
+    kotlin("jvm") version "2.4.0"
+    kotlin("plugin.serialization") version "2.4.0"
     id("org.jlleitschuh.gradle.ktlint") version "14.2.0"
     id("org.jetbrains.kotlinx.kover") version "0.9.8"
 
@@ -19,7 +19,7 @@ repositories {
     maven { url = uri("https://packages.confluent.io/maven/") }
 }
 
-val ktorVersion = "3.4.3"
+val ktorVersion = "3.5.1"
 val micrometerVersion = "1.17.0"
 val kotlinLoggingVersion = "3.0.5"
 val logbackVersion = "1.5.38"
