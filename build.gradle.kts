@@ -22,7 +22,7 @@ repositories {
 val ktorVersion = "3.5.1"
 val micrometerVersion = "1.17.0"
 val kotlinLoggingVersion = "3.0.5"
-val logbackVersion = "1.5.37"
+val logbackVersion = "1.5.38"
 val logstashVersion = "9.0"
 val kafkaClientsVersion = "8.1.1-ce"
 val avroVersion = "1.12.1"
@@ -30,7 +30,7 @@ val kafkaAvroSerializerVersion = "8.1.1"
 val ibmmqVersion = "10.0.0.0"
 val mockkVersion = "1.14.11"
 val kotlinVersion = "2.3.10"
-val kotestVersion = "6.2.1"
+val kotestVersion = "6.2.2"
 
 dependencies {
     // Ktor server
@@ -77,19 +77,19 @@ configurations.all {
                 because("Multiple versions of netty has vulnerable dependencies. Affected version < 4.2.15.Final")
             }
             if (requested.group == "tools.jackson.core" && requested.name == "jackson-databind") {
-                useVersion("3.2.0")
+                useVersion("3.2.1")
                 because("Multiple versions of jackson-databind has vulnerable dependencies. Affected version < >= 3.0.0, <= 3.1.3")
             }
             if (requested.group == "tools.jackson.core" && requested.name == "jackson-core") {
-                useVersion("3.2.0")
+                useVersion("3.2.1")
                 because("Multiple versions of jackson-core has vulnerable dependencies. Affected version >= 3.0.0, <= 3.1.0")
             }
             if (requested.group == "com.fasterxml.jackson.core" && requested.name == "jackson-databind") {
-                useVersion("2.21.4")
+                useVersion("2.22.1")
                 because("Multiple versions of jackson-databind has vulnerable dependencies. Affected version >= 2.19.0, <= 2.21.3")
             }
             if (requested.group == "com.fasterxml.jackson.core" && requested.name == "jackson-core") {
-                useVersion("2.21.4")
+                useVersion("2.22.1")
                 because("Multiple versions of jackson-core has vulnerable dependencies.. Affected version >= 2.19.0, <= 2.21.1")
             }
             if (requested.group == "io.opentelemetry" && requested.name == "opentelemetry-api") {
