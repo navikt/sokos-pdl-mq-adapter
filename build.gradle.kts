@@ -73,7 +73,7 @@ configurations.all {
                 because("Prefer the patched fork for vulnerability fix")
             }
             if (requested.group == "io.netty") {
-                useVersion("4.2.16.Final")
+                useVersion("4.2.17.Final")
                 because("Multiple versions of netty has vulnerable dependencies. Affected version < 4.2.15.Final")
             }
             if (requested.group == "tools.jackson.core" && requested.name == "jackson-databind") {
@@ -95,6 +95,10 @@ configurations.all {
             if (requested.group == "io.opentelemetry" && requested.name == "opentelemetry-api") {
                 useVersion("1.62.0")
                 because("OpenTelemetry Java SDK has Unbounded Memory Allocation in W3C Baggage Propagation. Affected version <= 1.61.0")
+            }
+            if (requested.group == "org.apache.httpcomponents.client5" && requested.name == "httpclient5") {
+                useVersion("5.6.3")
+                because("Multiple versions of httpclient5 has vulnerable dependencies. Affected version >= 5.0-alpha1, < 5.6.3")
             }
         }
     }
