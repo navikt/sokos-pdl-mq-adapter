@@ -89,8 +89,8 @@ Applikasjonen bruker [Grafana Alerting](https://grafana.nav.cloud.nais.io/alerti
 
 Varsler blir sendt til følgende Slack-kanaler:
 
-- Dev-miljø: [#team-mob-alerts-dev](https://nav-it.slack.com/archives/C042SF2FEQM)
-- Prod-miljø: [#team-mob-alerts-prod](https://nav-it.slack.com/archives/C042ESY71GX)
+- Dev-miljø: [#utbetaling-team-beregning-alerts-dev](https://nav-it.slack.com/archives/C0BHK19HMPD)
+- Prod-miljø: [#utbetaling-team-beregning-alerts-prod](https://nav-it.slack.com/archives/C0BUZH3FLLF)
 
 ### Grafana
 
@@ -102,4 +102,3 @@ Varsler blir sendt til følgende Slack-kanaler:
 
 Spørsmål knyttet til koden eller prosjektet kan stilles som issues her på Github.
 Interne henvendelser kan sendes via Slack i kanalen [#utbetaling](https://nav-it.slack.com/archives/CKZADNFBP)
-
