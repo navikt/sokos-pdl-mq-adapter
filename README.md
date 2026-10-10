@@ -89,12 +89,13 @@ Applikasjonen bruker [Grafana Alerting](https://grafana.nav.cloud.nais.io/alerti
 
 Varsler blir sendt til følgende Slack-kanaler:
 
-- Dev-miljø: [#utbetaling-team-beregning-alerts-dev](https://nav-it.slack.com/archives/C0BHK19HMPD)
-- Prod-miljø: [#utbetaling-team-beregning-alerts-prod](https://nav-it.slack.com/archives/C0BUZH3FLLF)
+- Dev-miljø: [#utbetaling-team-beregningsplattform-alerts-dev](https://nav-it.slack.com/archives/C0BHK19HMPD)
+- Prod-miljø: [#utbetaling-team-beregningsplattform-alerts-prod](https://nav-it.slack.com/archives/C0BUZH3FLLF)
 
 ### Grafana
 
-- [appavn](url)
+- [Dev-miljø](https://grafana.nav.cloud.nais.io/a/nais-apm-app/services/okonomi/sokos-pdl-mq-adapter?favorites=true&environment=dev)
+- [Prod-miljø](https://grafana.nav.cloud.nais.io/a/nais-apm-app/services/okonomi/sokos-pdl-mq-adapter?favorites=true&environment=prod)
 
 ---
 
