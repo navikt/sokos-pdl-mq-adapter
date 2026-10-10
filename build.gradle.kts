@@ -69,7 +69,7 @@ configurations.all {
     resolutionStrategy {
         eachDependency {
             if (requested.group == "org.lz4" && requested.name == "lz4-java") {
-                useTarget("at.yawk.lz4:lz4-java:1.11.3")
+                useTarget("at.yawk.lz4:lz4-java:1.11.4")
                 because("Prefer the patched fork for vulnerability fix")
             }
             if (requested.group == "io.netty") {
