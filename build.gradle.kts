@@ -6,7 +6,7 @@ plugins {
     kotlin("jvm") version "2.4.20"
     kotlin("plugin.serialization") version "2.4.20"
     id("org.jlleitschuh.gradle.ktlint") version "14.2.0"
-    id("org.jetbrains.kotlinx.kover") version "0.9.9"
+    id("org.jetbrains.kotlinx.kover") version "0.9.10"
 
     application
 }
@@ -22,7 +22,7 @@ repositories {
 val ktorVersion = "3.5.2"
 val micrometerVersion = "1.17.1"
 val kotlinLoggingVersion = "3.0.5"
-val logbackVersion = "1.6.3"
+val logbackVersion = "1.6.4"
 val logstashVersion = "9.0"
 val kafkaClientsVersion = "8.1.1-ce"
 val avroVersion = "1.12.2"
@@ -69,7 +69,7 @@ configurations.all {
     resolutionStrategy {
         eachDependency {
             if (requested.group == "org.lz4" && requested.name == "lz4-java") {
-                useTarget("at.yawk.lz4:lz4-java:1.11.3")
+                useTarget("at.yawk.lz4:lz4-java:1.12.0")
                 because("Prefer the patched fork for vulnerability fix")
             }
             if (requested.group == "io.netty") {
