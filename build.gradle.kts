@@ -20,17 +20,17 @@ repositories {
 }
 
 val ktorVersion = "3.6.0"
-val micrometerVersion = "1.17.1"
+val micrometerVersion = "1.17.2"
 val kotlinLoggingVersion = "3.0.5"
-val logbackVersion = "1.6.5"
+val logbackVersion = "1.6.6"
 val logstashVersion = "9.0"
 val kafkaClientsVersion = "8.1.1-ce"
 val avroVersion = "1.12.2"
 val kafkaAvroSerializerVersion = "8.1.1"
-val ibmmqVersion = "10.0.0.5"
+val ibmmqVersion = "10.0.1.0"
 val mockkVersion = "1.14.11"
 val kotlinVersion = "2.3.10"
-val kotestVersion = "6.2.5"
+val kotestVersion = "6.2.6"
 
 dependencies {
     // Ktor server
@@ -69,7 +69,7 @@ configurations.all {
     resolutionStrategy {
         eachDependency {
             if (requested.group == "org.lz4" && requested.name == "lz4-java") {
-                useTarget("at.yawk.lz4:lz4-java:1.12.0")
+                useTarget("at.yawk.lz4:lz4-java:1.12.1")
                 because("Prefer the patched fork for vulnerability fix")
             }
             if (requested.group == "io.netty" && requested.name == "netty-codec-http") {
