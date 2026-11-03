@@ -55,6 +55,7 @@ dependencies {
     implementation("org.apache.kafka:kafka-clients:$kafkaClientsVersion")
     implementation("org.apache.avro:avro:$avroVersion")
     implementation("io.confluent:kafka-avro-serializer:$kafkaAvroSerializerVersion")
+    implementation("at.yawk.lz4:lz4-java:1.12.1")
 
     // IBM MQ
     implementation("com.ibm.mq:com.ibm.mq.jakarta.client:$ibmmqVersion")
@@ -63,43 +64,36 @@ dependencies {
     testImplementation("io.mockk:mockk:$mockkVersion")
     testImplementation("io.kotest:kotest-assertions-core-jvm:$kotestVersion")
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
-}
 
-configurations.all {
-    resolutionStrategy {
-        eachDependency {
-            if (requested.group == "org.lz4" && requested.name == "lz4-java") {
-                useTarget("at.yawk.lz4:lz4-java:1.12.1")
-                because("Prefer the patched fork for vulnerability fix")
-            }
-            if (requested.group == "io.netty" && requested.name == "netty-codec-http") {
-                useVersion("4.2.17.Final")
-                because("Cache Poisoning and Information Disclosure via CORS Vary Header Overwrite. Affected version < 4.2.17.Final")
-            }
-            if (requested.group == "tools.jackson.core" && requested.name == "jackson-databind") {
-                useVersion("3.2.3")
-                because("Multiple versions of jackson-databind has vulnerable dependencies. Affected version >= 3.2.0, <= 3.2.2")
-            }
-            if (requested.group == "tools.jackson.core" && requested.name == "jackson-core") {
-                useVersion("3.2.3")
-                because("Multiple versions of jackson-core has vulnerable dependencies. Affected version >= 3.2.0, <= 3.2.1")
-            }
-            if (requested.group == "com.fasterxml.jackson.core" && requested.name == "jackson-databind") {
-                useVersion("2.22.3")
-                because("Multiple versions of jackson-databind has vulnerable dependencies. Affected version >= 2.22.0, < 2.22.2")
-            }
-            if (requested.group == "com.fasterxml.jackson.core" && requested.name == "jackson-core") {
-                useVersion("2.22.3")
-                because("Multiple versions of jackson-core has vulnerable dependencies. Affected version >= 2.22.0, <= 2.22.2")
-            }
-            if (requested.group == "org.apache.httpcomponents.client5" && requested.name == "httpclient5") {
-                useVersion("5.6.3")
-                because("Multiple versions of httpclient5 has vulnerable dependencies. Affected version >= 5.0-alpha1, < 5.6.3")
-            }
-            if (requested.group == "org.bouncycastle" && requested.name == "bcprov-jdk18on") {
-                useVersion("1.85")
-                because("Affected version < 1.85")
-            }
+    // Sårbarheter
+    implementation(platform("io.netty:netty-bom:4.2.19.Final")) {
+        because("Align Netty modules on a patched release")
+    }
+
+    constraints {
+        implementation("com.google.guava:guava:33.7.2-jre") {
+            because("GHSA-xxph-c9ww-hj94 affects Guava versions before 33.7.2")
+        }
+        implementation("org.xerial.snappy:snappy-java:1.1.10.9") {
+            because("Multiple security vulnerabilities affect snappy-java versions before 1.1.10.9")
+        }
+        implementation("io.opentelemetry:opentelemetry-api:1.67.0") {
+            because("GHSA-ccrj-gw8r-854m affects OpenTelemetry API versions before 1.67.0")
+        }
+        implementation("tools.jackson.core:jackson-databind:3.2.3") {
+            because("Multiple versions of jackson-databind has vulnerable dependencies. Affected version >= 3.2.0, <= 3.2.2")
+        }
+        implementation("com.fasterxml.jackson.core:jackson-databind:2.22.3") {
+            because("Multiple versions of jackson-databind has vulnerable dependencies. Affected version >= 2.22.0, < 2.22.2")
+        }
+        implementation("org.apache.httpcomponents.client5:httpclient5:5.6.3") {
+            because("Multiple versions of httpclient5 has vulnerable dependencies. Affected version >= 5.0-alpha1, < 5.6.3")
+        }
+    }
+
+    modules {
+        module("org.lz4:lz4-java") {
+            replacedBy("at.yawk.lz4:lz4-java", "Prefer the patched fork for vulnerability fix")
         }
     }
 }
