@@ -28,7 +28,7 @@ val kafkaClientsVersion = "8.1.1-ce"
 val avroVersion = "1.12.2"
 val kafkaAvroSerializerVersion = "8.1.1"
 val ibmmqVersion = "10.0.1.0"
-val mockkVersion = "1.14.11"
+val mockkVersion = "1.14.12"
 val kotlinVersion = "2.3.10"
 val kotestVersion = "6.2.6"
 
@@ -55,7 +55,7 @@ dependencies {
     implementation("org.apache.kafka:kafka-clients:$kafkaClientsVersion")
     implementation("org.apache.avro:avro:$avroVersion")
     implementation("io.confluent:kafka-avro-serializer:$kafkaAvroSerializerVersion")
-    implementation("at.yawk.lz4:lz4-java:1.12.1")
+    implementation("at.yawk.lz4:lz4-java:1.14.0")
 
     // IBM MQ
     implementation("com.ibm.mq:com.ibm.mq.jakarta.client:$ibmmqVersion")
@@ -66,27 +66,27 @@ dependencies {
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
 
     // Sårbarheter
-    implementation(platform("io.netty:netty-bom:4.2.19.Final")) {
+    implementation(platform("io.netty:netty-bom:4.2.20.Final")) {
         because("Align Netty modules on a patched release")
     }
 
     constraints {
-        implementation("com.google.guava:guava:33.7.2-jre") {
+        implementation("com.google.guava:guava:33.8.0-jre") {
             because("GHSA-xxph-c9ww-hj94 affects Guava versions before 33.7.2")
         }
         implementation("org.xerial.snappy:snappy-java:1.1.10.9") {
             because("Multiple security vulnerabilities affect snappy-java versions before 1.1.10.9")
         }
-        implementation("io.opentelemetry:opentelemetry-api:1.67.0") {
+        implementation("io.opentelemetry:opentelemetry-api:1.68.0") {
             because("GHSA-ccrj-gw8r-854m affects OpenTelemetry API versions before 1.67.0")
         }
-        implementation("tools.jackson.core:jackson-databind:3.2.3") {
+        implementation("tools.jackson.core:jackson-databind:3.3.0") {
             because("Multiple versions of jackson-databind has vulnerable dependencies. Affected version >= 3.2.0, <= 3.2.2")
         }
-        implementation("com.fasterxml.jackson.core:jackson-databind:2.22.3") {
+        implementation("com.fasterxml.jackson.core:jackson-databind:2.23.0") {
             because("Multiple versions of jackson-databind has vulnerable dependencies. Affected version >= 2.22.0, < 2.22.2")
         }
-        implementation("org.apache.httpcomponents.client5:httpclient5:5.6.3") {
+        implementation("org.apache.httpcomponents.client5:httpclient5:5.6.5") {
             because("Multiple versions of httpclient5 has vulnerable dependencies. Affected version >= 5.0-alpha1, < 5.6.3")
         }
     }
