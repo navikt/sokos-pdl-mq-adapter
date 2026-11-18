@@ -74,7 +74,7 @@ dependencies {
         implementation("com.google.guava:guava:33.8.0-jre") {
             because("GHSA-xxph-c9ww-hj94 affects Guava versions before 33.7.2")
         }
-        implementation("org.xerial.snappy:snappy-java:1.1.10.9") {
+        implementation("org.xerial.snappy:snappy-java:1.1.10.12") {
             because("Multiple security vulnerabilities affect snappy-java versions before 1.1.10.9")
         }
         implementation("io.opentelemetry:opentelemetry-api:1.68.0") {
