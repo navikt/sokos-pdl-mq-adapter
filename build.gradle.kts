@@ -22,7 +22,7 @@ repositories {
 val ktorVersion = "3.6.1"
 val micrometerVersion = "1.17.2"
 val kotlinLoggingVersion = "3.0.5"
-val logbackVersion = "1.6.6"
+val logbackVersion = "1.6.7"
 val logstashVersion = "9.0"
 val kafkaClientsVersion = "8.1.1-ce"
 val avroVersion = "1.12.2"
@@ -30,7 +30,7 @@ val kafkaAvroSerializerVersion = "8.1.1"
 val ibmmqVersion = "10.0.1.0"
 val mockkVersion = "1.14.12"
 val kotlinVersion = "2.3.10"
-val kotestVersion = "6.2.6"
+val kotestVersion = "6.2.7"
 
 dependencies {
     // Ktor server
@@ -55,7 +55,7 @@ dependencies {
     implementation("org.apache.kafka:kafka-clients:$kafkaClientsVersion")
     implementation("org.apache.avro:avro:$avroVersion")
     implementation("io.confluent:kafka-avro-serializer:$kafkaAvroSerializerVersion")
-    implementation("at.yawk.lz4:lz4-java:1.14.0")
+    implementation("at.yawk.lz4:lz4-java:1.14.1")
 
     // IBM MQ
     implementation("com.ibm.mq:com.ibm.mq.jakarta.client:$ibmmqVersion")
@@ -66,7 +66,7 @@ dependencies {
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
 
     // Sårbarheter
-    implementation(platform("io.netty:netty-bom:4.2.20.Final")) {
+    implementation(platform("io.netty:netty-bom:4.2.21.Final")) {
         because("Align Netty modules on a patched release")
     }
 
